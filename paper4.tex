@@ -53,11 +53,12 @@
 % You will need to make the title all-caps
 \title{Dynamic Adaptive Saturated Sliding Mode Control For Deployment of Tethered Satellite System}
 
-\author[1]{Zhiqiang Ma}
+\author[2]{Zhiqiang Ma}
 \author[1]{Guanghui Sun}
-\author[1]{Zhengkai Li}
+\author[2]{Zhengkai Li}
 
 \affil[1]{Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China, with corresponding author email. Email: guanghuisun@hit.edu.cn}
+\affil[2]{Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China, with corresponding author email.}
 %\affil[2]{Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China}
 %\affil[2]{Third affiliation address}
 
@@ -383,24 +384,7 @@ S_{q4} &= Sine(\Delta \dot q+\alpha\xi\Vert\Delta q\Vert^{\hat\alpha}sign(\Delta
 such that the finite convergence of the system~(\ref{eq:Sr4}) can be ensured by using terminal sliding mode theory.
 \end{myrem}
 \section{Simulation studies}\label{sec:4}
-In this section, the simulations of the regulation of the deployment dynamics with saturated sliding mode control, saturated terminal sliding mode control and quasi-saturated terminal sliding mode control, and for clarity, these controllers are abbreviated as S-SMC, ST-SMC and QSF-SMC, respectively, the designer parameters of which are listed in Table \ref{tab:1}.\par
-\begin{table}[!hbp]
-\caption{Designer parameters}\label{tab:1}
-\begin{center}
-\begin{tabular}{ccccc}
-\hline
- &S-SMC &ST-SMC &QST-SMC \\
-\hline
-$\delta$    & 1.1   & 1.1   & 1.1  \\
-$\varphi$  & $1\times 10^{-3}$ & $1\times 10^{-3}$& $1\times 10^{-3}$ \\
-$\gamma$    & 10    & 0.1     & 0.1     \\
-$K_d(K_{*})$       & 1     & 1     & 1   \\
-$\alpha$    & 0.8     & 0.8     & 1.2   \\
-$\hat\alpha$ & *    & 0.6   & *      \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+In this section, the simulations of the regulation of the deployment dynamics with saturated sliding mode control, saturated terminal sliding mode control and quasi-saturated terminal sliding mode control, and for clarity, these controllers are abbreviated as S-SMC, ST-SMC and QSF-SMC, respectively. The parameters of these controllers can selected as follows: $\delta=1.1$, $\varphi= 1\times 10^{-3}$, $\alpha = 0.8$, $K_d(K_{*})=1$, $\gamma = 0.1$ and $\hat\alpha=0.6$.\par
 Besides the designer parameter determined, the simulation initial and desired condition can be described as follows. The circular orbital altitude is selected around 260 $km$ approximately, and the orbital angular velocity is about $1.17\times 10^{-3}$ $rad/s$. At the initial ejection of the subsatellite, the true anomaly is assumed 0 $rad$. Meanwhile, the initial deployment velocity is about 3 $m/s$, and the subsatellite is going to be deployed at 3.5 $km$ vertically. The pitching and rolling dynamics is varying in a small range, and hence, without loss of generality, the numerical initial condition gives rise to: $\theta_0 = 0.1$, $\varphi_0 = 0.1$, $\lambda_0 = 0.02$; the desired condition is set to be $\theta_d = 0$, $\phi_d = 0$ and $\lambda_d = 1$, accordingly, $\lambda(t_0)\rightarrow\lambda_d$, $t\rightarrow\infty$ with $\theta(t_0)\rightarrow\theta_d$, $\phi(t_0)\rightarrow\phi_d$, $t\rightarrow\infty$. Hence the dimensionless tether length is varying in $[0.02,1]$.\par
 During the deployment, the dimensionless thruster forces which manage the in-plane angle and the out-of-plane angle are assumed to be saturated with $\vert\hat\tau_{\theta}\vert\le5 $ and $\vert\hat\tau_{\phi}\vert\le 5$. Also, the dimensionless tension $\hat\tau_t$ is limited, and from Eq.~(\ref{eq:varcon}), one can obtain
 \begin{align}
