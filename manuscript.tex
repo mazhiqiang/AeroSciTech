@@ -1,26 +1,5 @@
-\documentclass[Journal,letterpaper]{ascelike-new}
-%% Please choose the appropriate document class option:
-% "Journal" produces double-spaced manuscripts for ASCE journals.
-% "NewProceedings" produces single-spaced manuscripts for ASCE conference proceedings.
-% "Proceedings" produces older-style single-spaced manuscripts for ASCE conference proceedings.
-%
-%% For more details and options, please see the notes in the ascelike-new.cls file.
-
-% Some useful packages...
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{graphicx}
-%\usepackage[figurename=Fig.,labelfont=bf,labelsep=period]{caption}
-\usepackage{subcaption}
-%\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsbsy}
-%\usepackage{newtxtext,newtxmath}
-\usepackage[colorlinks=true,citecolor=black,linkcolor=black]{hyperref}
-%
-
+%\documentclass[draftclsnofoot,onecolumn]{IEEEtran}
+\documentclass[3p]{elsarticle}
 \usepackage{tipa}
 \usepackage{amsmath}%math
 \usepackage{amsthm}%proof
@@ -29,10 +8,9 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{textcomp}
-%\usepackage[colorlinks,linkcolor=black,anchorcolor=black,citecolor=black]{hyperref}
+\usepackage[colorlinks,linkcolor=black,anchorcolor=black,citecolor=black]{hyperref}
 \usepackage{amsfonts,amssymb}
 \usepackage{color,soul}
-\usepackage{ulem}
 \theoremstyle{plain}
 \newtheorem{myas}{Assumption}
 \newtheorem{mydef}{Definition}
@@ -42,36 +20,27 @@
 %\theoremstyle{remark}
 \theoremstyle{remark}
 \newtheorem{myrem}{Remark}
-
-% Please add the first author's last name here for the footer:
-\NameTag{AuthorOneLastName, \today}
-% Note that this is not displayed if the NoPageNumbers option is used
-% in the documentclass declaration.
-%
 \begin{document}
-
-% You will need to make the title all-caps
+\begin{frontmatter}
 \title{Dynamic Adaptive Saturated Sliding Mode Control For Deployment of Tethered Satellite System}
+\author{Zhiqiang Ma}
+\author{Guanghui Sun\corref{cor1}}
+{\author{Zhengkai Li\corref{cor2}}}
+\ead{guanghuisun@hit.edu.cn}
+\cortext[cor1]{Corresponding author}
+\address{Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China}
 
-\author[1]{Zhiqiang Ma}
-\author[2]{Guanghui Sun}
-\author[3]{Zhengkai Li}
-\affil[1]{Ph.D. Candidate, Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China, Email: zhiqiangma@hit.edu.cn}
-\affil[2]{Associate Professor, Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China, Email: guanghuisun@hit.edu.cn}
 
-\affil[3]{Ph.D. Candidate, Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China, Email: lizhengkai1@126.com}
-%\affil[2]{Research Institute of Intelligent Control and Systems, Harbin Institute of Technology, Harbin 150001, China}
-%\affil[2]{Third affiliation address}
 
-\maketitle
-
-% Please include an abstract:
 \begin{abstract}
 This paper presents a novel adaptive dynamic sliding mode scheme for the deployment of the tethered satellite system. The tethered satellite system is modelled based on Lagrangian mechanics theory, and to overcome the limited input of the dynamic model, a new scalable dimensionless transform and strictly bounded terms are designed to guarantee the existence of the ratio between limited input and command signal. The adaptive saturated sliding mode control scheme is proposed to govern the tether deployment by introducing the adaptive rate into the system gain, and the stability analysis indicates that this measure can eliminate the uncertainty caused by the input limitation to guarantee that the asymptotically stability of the deployment dynamics. The numerical simulations are reported to verify the effectiveness of the proposed control laws.
 \end{abstract}
-
+\begin{keyword}
+Tethered satellite;  Sliding mode control;  Input limitation; Adaptive control
+\end{keyword}
+\end{frontmatter}
 \section{Introduction}
-The deployment is the key technology of the space tethered satellite system~\cite{wen2008advances,yousefian2015anti}, and this technique makes it possible to develop various applications for space exploration and scientific research, such as space debris removal~\cite{zhao2014thrust}, space elevator~\cite{kojima2015mission}, satellite de-orbit~\cite{zhong2013dynamics,zhong2013long} and the tethered space robot~\cite{huang2014optimal}. Many international space research institutes have launched some orbital, suborbital and ground experiments in an effort, such as TSS-1R, SEDS, MAST and YES2, to verify the feasibility of the proposed theoretical and simulation design for the deployment of the tethered satellite system~\cite{williams2012review,robitaille2006interpreting,stone1998tss,williams2009yes2}. These experimental results make researchers proceed to advance mechanics, kinetic and control studies intensively, to tackle the challenges of requirements from space missions in the future~\cite{yu2016nonlinear,wen2015space,aslanov2016swing,meng2016lyapunov,zhang2015line}.\par
+The deployment is the key technology of the space tethered satellite system~\cite{wen2008advances,yousefian2015anti}, and this technique supports various applications for space exploration and scientific research, such as space debris removal~\cite{zhao2014thrust}, space elevator~\cite{kojima2015mission}, satellite de-orbit~\cite{zhong2013dynamics,zhong2013long} and the tethered space robot~\cite{huang2014optimal}. Many international space research institutes have launched some orbital, suborbital and ground experiments in an effort, such as TSS-1R, SEDS, MAST and YES2, to verify the feasibility of the proposed theoretical and simulation design for the deployment of the tethered satellite system~\cite{williams2012review,robitaille2006interpreting,stone1998tss,williams2009yes2}. These experimental results make researchers proceed to advance mechanics, kinetic and control studies intensively, to tackle the challenges of requirements from space missions in the future~\cite{yu2016nonlinear,wen2015space,aslanov2016swing,meng2016lyapunov,zhang2015line}.\par
 
 Recent scientific researches on deployment of the tethered satellite focus on the stabilization of the dynamics, and have varying merit and outcomes, providing different kinds of control schemes, including tension, thruster, electrodynamic and Coulomb approach~\cite{kojima2015stabilisation,qi2016dynamics,zhong2016research}. Among the deployment stabilization strategies, the hybrid tension and thruster control boosts to the new developments. Iki et al. implemented the ground experiment of an electrodynamic tether deployment from a spool-type reel, and the thruster was used to guarantee the deployment of kilometers-length space tether~\cite{iki2014experiments}. Aslanov et al. presented a thruster method driving the space tethered tug, and analyzed the dragging dynamics~\cite{aslanov2013dynamics}. Huang et al. investigated the attitude and deploying dynamics of the tethered space robot from the standpoint of thruster consumption~\cite{huang2015coupling}. Jung et al. adopted thruster scheme to achieve the ideal deployment rate during the deployment of three-body tethered satellites~\cite{jung2015nonlinear}. Liu et al. equipped the thruster system, which consisted of four pairs of thrusters, in the subsatellite dedicating for regulation of the attitude and deployment dynamics~\cite{liu2014attitude}. Zakrzhevskii divided the deployment process into two stages, the first stage of which ejected the tether with thruster to position the tether at desired beginning point of the second stage, and the second stage continued to adjust the tether to the stable vertical configuration by using tension generated by friction~\cite{zakrzhevskii2016method}. Mantellato et al. reported the thrust-aided librating deployment of tape tethers, and the force acting on the tape tether included the tension and thruster force~\cite{mantellato2015thrust}. This hybrid strategy has several advantages, such as simplifying the input model greatly, non-environmental dependence (magnetic field dependence), easy assembly and physical implementation, thus is broadly utilized in reality compared with other control strategies.\par
 
@@ -309,7 +278,7 @@ utilizing $sign(S_{r1})=sign(S_{r2})$ and $K_1$ proceeds to rewrite Eq.~(\ref{eq
 &\le \varphi S_{r2}^Tsign(S_{r2})-\varphi\delta S_{r2}^T K_dsign(S_{r2})
 \end{split}
 \end{align}
-owing to the boundedness of the expression above, a large enough $\delta$ can be selected such that $\dot V \le 0$. According to the description of Barbalatâ€™s lemmas, it implies that $S_{r2}$ asymptotically converges to zero with the set of suitable designer parameters.\par
+owing to the boundedness of the expression above, a large enough $\delta$ can be selected such that $\dot V \le 0$. According to the description of Barbalat¡¯s lemmas, it implies that $S_{r2}$ asymptotically converges to zero with the set of suitable designer parameters.\par
 Utilizing $S_{r2}=0$ leads to the equation
 \begin{align}
 S_{q2}=-arcsin(\gamma\int^t_{t_0}S_{q1}(\varsigma) d\varsigma),\label{eq:eqSq2}
@@ -439,12 +408,9 @@ The inputs in S-SMC for dynamic model~(\ref{eq:dynamic model}) is exhibited in F
 In this paper, the error dynamics of the deployment of the TSS provides the adaptive sliding mode control with a simplified solution for the reaching phase, which ignores the nonlinear nature of the model, and the new dimensionless transformation subject to the limited input guarantees the effectiveness of the auxiliary Lyapunov function with adaptive terms. The simulation results show that the proposed methods adjust the length of the tether and the swinging dynamics as desired, although there exists the input limitation during the deployment. According to the results mentioned above, combining error dynamics design approach, adaptive approach and nonlinear sliding mode surface design technology may provide a further insight into regulation of the dynamics of the deployment of the tethered satellite system.
 \section{Acknowledgment}
 This work is partially supported by the National Natural Science Foundation of China (No. 61104112, 61503101).
-%
-% Here's the list of references:
-%
-% \label{section:references}
-%\bibliography{ascexmpl-new}
+\section{References}
 \bibliography{paper4_ref}
-%
-
+\bibliographystyle{elsarticle-num}
 \end{document}
+
+
