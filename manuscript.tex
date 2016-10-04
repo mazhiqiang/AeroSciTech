@@ -128,13 +128,13 @@ Before declaring the controller design, some basic precondition is prepared for 
 \end{align}
 where $Y_r = Y_r(q,\dot q,\dot q_r,\ddot q_r)$. Based on results mentioned above, the open-loop error dynamics expressed by $S_r$ is able to be obtained, as follows:
 \begin{align}
-H(q)\dot S_r+C(q,\dot q)S_r+G(q)=\tau - Y_r\Theta\label{eq:dynamic model 2}
+H(q)\dot S_r+C(q,\dot q)S_r=\tau - Y_r\Theta\label{eq:dynamic model 2}
 \end{align}
 where $S_r$ is defined as
 \begin{align}
 S_r=\dot q-\dot q_r.\label{eq:Sr1}
 \end{align}
-For deriving the control scheme, some properties should be given out in advance.
+We define the tracking error as $\Delta q=q-q_d$, in which $q_d$ is the reference trajectory with $q_d(t)\in C^2$. For deriving the control scheme, some properties should be given out in advance.
 \begin{mypro}
 Positive scalars $\Xi_i(i = 0,\ldots,5)$ always exist such that
 \begin{align}
@@ -143,11 +143,11 @@ Positive scalars $\Xi_i(i = 0,\ldots,5)$ always exist such that
 \Vert H(q)\Vert & \le \zeta_{max}(H(q))<\Xi_1<\infty\\
 \Vert C(q,\dot q)\Vert & \le \Xi_2\Vert\dot q\Vert\\
 \Vert G(q)\Vert & \le \Xi_3\\
-\Vert \dot q_r\Vert & \le \Xi_4+\alpha\Vert\Delta q\Vert+\beta\Vert\sigma\Vert\\
+\Vert \dot q_r\Vert & \le \Xi_4+\alpha\Vert\Delta q\Vert+\gamma\Vert\sigma\Vert\\
 \Vert \ddot q_r\Vert & \le \Xi_5+\alpha\Vert\Delta \dot q\Vert\\
 \end{split}
 \end{align}
-where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively. Furthermore, one can have $Y_r\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta q,\Delta \dot q,\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi$, in which $\varphi$ is a positive scalar determined according to the system state~\cite{parra2003dynamic}.
+where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively, and $\alpha$ and $\gamma$ are controller parameters which will be discussed later on. Furthermore, one can have $Y_r\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta q,\Delta \dot q,\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi$, in which $\varphi$ is a positive scalar determined according to the system state~\cite{parra2003dynamic}.
 \end{mypro}
 \subsection{Saturated sliding mode control subject to input limitation}
 The process above can frame a conventional dynamic sliding PID control scheme, exactly, a PD controller, which can regulate the dynamics of n-link robotic manipulator if extending the dimension in the derivation above \cite{parra2003dynamic}. However, it is not able to regulate the dynamics of the deployment as desired theoretically, because the input $\tau$ in the PID controller is not confined to the characteristics of the tension. For coping with the issue about the bounded input, we develop the dynamic sliding mode control with the experience of saturated manifold, which is also a popular technique in the control of Lagrangian system.\par
@@ -166,7 +166,7 @@ and it's notable that the function above is saturated or bounded and owns an imp
 &\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert\\
 &sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)), \forall x, \vert\Delta h\vert<1.
 \end{align}
-in which, the characteristics of the signum above can be obtained by check if the sign of $y=(x_1+x_2)(Sine(x_1)+Sine(x_2))$ is alwasys nonnegative.
+in which, the characteristics of the signum above can be obtained by \textcolor{red}{checking} if the sign of $y=(x_1+x_2)(Sine(x_1)+Sine(x_2))$ is alwasys nonnegative.
 \end{mylem}
 \begin{figure}
 \centering
@@ -190,32 +190,32 @@ where $y_{min}$ and $y_{max}$ stand for the minimum and maximum values of $g(y)$
 \end{align}
 \end{mylem}
 \begin{myrem}
-As we know, compared with the tension limited in deployment mission, the generalized in-plane and out-of-plane forces are saturated but not regular, hence for avoiding confusion, we specify the following expression
+As we know, \textcolor{red}{the tension, in-plane and out-of-plane thruster force are all limited during deployment mission, and we describe inputs by using the matrix and vector to predigest the following illation.}
 \begin{align}
-g(\tau) &= \begin{pmatrix}g(\hat\tau_t)\\g(\hat\tau_\theta)\end{pmatrix}\\
-R(\tau) &= \begin{bmatrix}R(\hat\tau_t)&0\\0&R(\hat\tau_\theta)\end{bmatrix}.
+\overrightarrow{g}(\tau) &= \left(g(\hat\tau_t),g(\hat\tau_\theta),g(\hat\tau_\phi)\right)^T\\
+R_M(\tau) &= \begin{bmatrix}R(\hat\tau_t)&0&0\\0&R(\hat\tau_\theta)&0\\0&0&R(\hat\tau_\phi)\end{bmatrix}.
 \end{align}
 and in order to design the saturated sliding mode  control for the dynamics of the deployment, the $Sine$ function for vectors is specified as:
 \begin{align}
-Sine(\Delta q)=\begin{pmatrix}Sine(\Delta \lambda)\\Sine(\Delta\theta)\end{pmatrix}.
+\overrightarrow{Sine}(q)=\begin{pmatrix}Sine(\lambda),Sine(\theta),Sine(\phi)\end{pmatrix}^T.
 \end{align}
 \end{myrem}
 The lemmas above introduce some properties about saturated functions, with which the dynamic sliding mode control subject to input limitation for Lagrangian system~(\ref{eq:dynamic model}) can be designed by using the subsequent theorem.
 \begin{mythm}\label{thm:1}(Saturated sliding mode control)
 Considering a nominal Lagrangian system~(\ref{eq:dynamic model}) expressing the dynamics of the deployment of the TSS, one can construct a saturated sliding mode control subject to input limitation, as follows:
 \begin{align}
-\tau = -g(\delta\varphi F(t) K_dsign(S_{r1})),\label{eq:slider control}
+\tau = -\overrightarrow{g}(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1})),\label{eq:slider control}
 \end{align}
 where
 \begin{align}
 \begin{split}
 S_{r1} &= S_{q1}+\gamma\int^t_{t_0}S_{q1}(\varsigma) d\varsigma\\
-S_{q1} &= Sine(\Delta \dot q+\alpha\Delta q),
+S_{q1} &= \overrightarrow{Sine}(\Delta \dot q+\alpha\Delta q),
 \end{split}
 \end{align}
 in which, $F(0)>0$, and the derivative of $F(t)$ has the characteristics:
 \begin{align}
-\frac{d}{dt}F(t) = \delta\varphi S_{r2}^T K_1K_de^{-2K_1^{-1}F^{-1}(t)}sign(S_{r2})
+\frac{d}{dt}F(t) = \delta\varphi S_{r2}^T K_1K_de^{-2K_1^{-1}F^{-1}(t)}\overrightarrow{sign}(S_{r2})
 \end{align}
 where $K_1\in R^{2\times 2}$ is a positive define diagonal matrix, which will be given out later, and if $K\in R^{2\times 2}$, define
 \begin{align}
@@ -226,6 +226,10 @@ e^{K_{21}}&e^{K_{22}}
 \end{bmatrix}.
 \end{align}
 $\gamma$ is a positive scalar, such that the deployment dynamics can be regulated as desired.
+\begin{align}
+\overrightarrow{sign}(x) = \begin{pmatrix}sign(x_1),sign(x_2),\cdots,sign(x_n)\end{pmatrix}^T,
+\end{align}
+for a vector $x=\left(x_1,x_2,,\cdots,x_n\right)^T$.
 \end{mythm}
 \begin{proof}
 Consider dynamic coordinates change $S_{r2}$ with the regular error variable but not the $Sine$ form:
@@ -235,19 +239,15 @@ S_{r2} &= S_{q2}+arcsin(\gamma\int^t_{t_0}S_{q1}(\varsigma) d\varsigma)\\
 S_{q2} &= \Delta \dot q+\alpha \Delta q,
 \end{split}
 \end{align}
-It is obvious that $S_{q_1}$ is bounded, or exactly saturated, hence $S_{r_1}$ is also bounded if the dynamics can be controlled as desired. In addition, one can select a suitable positive scalar $\gamma$ such that $\gamma\int^t_{t_0}S_{q1}(\varsigma)^\varpi d\varsigma\in[-1,1]$.\par
+It is obvious that $S_{q_1}$ is bounded, or exactly saturated, hence $S_{r_1}$ is also bounded if the dynamics can be controlled as desired. In addition, one can select a suitable positive scalar $\gamma$ such that $\gamma\int^t_{t_0}S_{q1}(\varsigma) d\varsigma\in[-1,1]$.\par
 According to Lemma~\ref{lemma:1}, it is apparent that $S_{r2}$ and $S_{r1}$ have the subsequent relation:
 \begin{align}
-&S_{r2}^T sign(S_{r2}) \ge  S_{r1}^T sign(S_{r1})\\
-&sign(S_{r2})=sign(S_{r1}),
+&S_{r2}^T \overrightarrow{sign}(S_{r2}) \ge  S_{r1}^T \overrightarrow{sign}(S_{r1})\\
+&\overrightarrow{sign}(S_{r2})=\overrightarrow{sign}(S_{r1}),
 \end{align}
-where
+Introducing the limited input~(\ref{eq:slider control}) and replacing the dynamic coordinates change $S_r$ in Eq.~(\ref{eq:dynamic model 2}) with $S_{r2}$ holds results in the following expression:
 \begin{align}
-sign(x) = \begin{pmatrix}sign(x_1),sign(x_2),\cdots,sign(x_n)\end{pmatrix}^T,
-\end{align}
-for a vector $x$. Introducing the limited input~(\ref{eq:slider control}) and replacing the dynamic coordinates change $S_r$ in Eq.~(\ref{eq:dynamic model 2}) with $S_{r2}$ holds results in the following expression:
-\begin{align}
-H(q)\dot S_{r2} = -g(\delta\varphi F(t) K_dsign(S_{r1}))-C(q,\dot q)S_{r2}-Y_{r2}\Theta.
+H(q)\dot S_{r2} = -\overrightarrow{g}(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1}))-C(q,\dot q)S_{r2}-Y_{r2}\Theta.
 \end{align}
 Select the Lyapunov function candidate
 \begin{align}
@@ -257,10 +257,10 @@ where $v=F(t)e^{K_1^{-1}F^{-1}(t)}$ and $\frac{1}{2}v^2$ is an auxiliary Lyapuno
 \begin{align}
 \begin{split}
 \dot V &= S_{r2}^TH(q)\dot S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}+v\dot v\\
-&= -S_{r2}^Tg(\delta\varphi F(t) K_dsign(S_{r1}))-S_{r2}^TC(q,\dot q)S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}-S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -S_{r2}^Tg(\delta\varphi F(t) K_dsign(S_{r1}))-S_{r2}^TY_{r2}\Theta+\frac{1}{2}S_{r2}^T(\dot H(q)-2C(q,\dot q))S_{r2}+v\dot v\\
-&= -S_{r2}^Tg(\delta\varphi F(t) K_dsign(S_{r1}))-S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -S_{r2}^TR(\delta\varphi F(t) K_dsign(S_{r1}))\delta\varphi F(t) K_dsign(S_{r1})-S_{r2}^TY_{r2}\Theta+v\dot v.\label{eq:V1_1}
+&= -S_{r2}^T\overrightarrow{g}(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1}))-S_{r2}^TC(q,\dot q)S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}-S_{r2}^TY_{r2}\Theta+v\dot v\\
+&= -S_{r2}^T\overrightarrow{g}(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1}))-S_{r2}^TY_{r2}\Theta+\frac{1}{2}S_{r2}^T(\dot H(q)-2C(q,\dot q))S_{r2}+v\dot v\\
+&= -S_{r2}^T\overrightarrow{g}(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1}))-S_{r2}^TY_{r2}\Theta+v\dot v\\
+&= -S_{r2}^TR_M(\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1}))\delta\varphi F(t) K_d\overrightarrow{sign}(S_{r1})-S_{r2}^TY_{r2}\Theta+v\dot v.\label{eq:V1_1}
 \end{split}
 \end{align}
 Since the command $ -\delta\varphi F(t) K_dS_{r1}$ is bounded, one can select reasonably small positive scalars $c_1$ and $c_2$ such that $0<c_1\le R(\hat\tau_t)<1$ and $0<c_2\le R(\hat\tau_\theta)<1$, and obtain a diagonal matrix as follows:
@@ -269,13 +269,13 @@ K_1 = \begin{bmatrix}c_1&0\\0&c_2\end{bmatrix}.\label{eq:saturated ratio}
 \end{align}
 $v\dot v$ is able to be derived as follows:
 \begin{align}
-v\dot v =\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})sign(S_{r2}),
+v\dot v =\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})\overrightarrow{sign}(S_{r2}),
 \end{align}
-utilizing $sign(S_{r1})=sign(S_{r2})$ and $K_1$ proceeds to rewrite Eq.~(\ref{eq:V1_1}) as:
+utilizing $\overrightarrow{sign}(S_{r1})=\overrightarrow{sign}(S_{r2})$ and $K_1$ proceeds to rewrite Eq.~(\ref{eq:V1_1}) as:
 \begin{align}
 \begin{split}\label{eq:V1_2}
-\dot V&\le -S_{r2}^T\delta\varphi  K_1K_dF(t)sign(S_{r2})+S_{r2}^T\varphi sign(S_{r2})+\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})sign(S_{r2})\\
-&\le \varphi S_{r2}^Tsign(S_{r2})-\varphi\delta S_{r2}^T K_dsign(S_{r2})
+\dot V&\le -S_{r2}^T\delta\varphi  K_1K_dF(t)\overrightarrow{sign}(S_{r2})+S_{r2}^T\varphi \overrightarrow{sign}(S_{r2})+\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})\overrightarrow{sign}(S_{r2})\\
+&\le \varphi S_{r2}^T\overrightarrow{sign}(S_{r2})-\varphi\delta S_{r2}^T K_d\overrightarrow{sign}(S_{r2})
 \end{split}
 \end{align}
 owing to the boundedness of the expression above, a large enough $\delta$ can be selected such that $\dot V \le 0$. According to the description of Barbalat¡¯s lemmas, it implies that $S_{r2}$ asymptotically converges to zero with the set of suitable designer parameters.\par
@@ -315,7 +315,7 @@ The design methodology of the saturated sliding mode control has been exhibited 
 \end{align}
 where $0<p/q<1$ and $p$ and $q$ are both positive odd, and a shrewd formula
 \begin{align}
-\dot Z = \vert Z\vert^{\hat\alpha} sign(Z),
+\dot Z = \vert Z\vert^{\hat\alpha} \overrightarrow{sign}(Z),
 \end{align}
 where $0<\hat \alpha<1$, performs the same behavior. Inducting the terminal attractor into the saturated sliding mode control yields a saturated slider-like scheme, and for adopting to the system subject to input limitation, an assumption is given firstly.
 \begin{myas}\label{as:1}
@@ -324,12 +324,12 @@ For Eq.~(\ref{eq:dynamic model}), the length rate is thought to be bounded durin
 \begin{mythm}\label{thm:2}(Quasi-saturated terminal sliding mode control)
 Considering the dynamics of the deployment as described in Eq.~(\ref{eq:dynamic model}) with limited tension control, the quasi-saturated terminal sliding mode control input can be designed as follow:
 \begin{align}
-\tau = -g(\delta\varphi F(t) K_{d1}sign(S_{r3}))
+\tau = -\overrightarrow{g}(\delta\varphi F(t) K_{d1}\overrightarrow{sign}(S_{r3}))
 \end{align}
 where
 \begin{align}
-S_{r3} &= S_{q3}+\gamma\int^t_{t_0}\Vert S_{q3}(\varsigma)\Vert^{\hat\alpha}  sign(S_{q3}(\varsigma))d\varsigma\label{eq:Sr3}\\
-S_{q3} &= \Delta \dot q+\alpha Sine(\xi\Delta q),\label{eq:Sq3}
+S_{r3} &= S_{q3}+\gamma\int^t_{t_0}\Vert S_{q3}(\varsigma)\Vert^{\hat\alpha}  \overrightarrow{sign}(S_{q3}(\varsigma))d\varsigma\label{eq:Sr3}\\
+S_{q3} &= \Delta \dot q+\alpha \overrightarrow{Sine}(\xi\Delta q),\label{eq:Sq3}
 \end{align}
 where $0<\hat\alpha< 1$, such that the dynamics~(\ref{eq:dynamic model 2}) can be regulated as desired.
 \end{mythm}
@@ -342,13 +342,13 @@ If the designer parameter $\hat\alpha = 1$, the quasi-saturated terminal sliding
 \begin{myrem}
 Assumption~\ref{as:1} guarantees that the input $\tau$ is bounded in Theorem~\ref{thm:2}, accordingly, a tiny positive scalar $c$ is able to be found such that $0<c\le R(\hat\tau_t)<1$ always exists. Admittedly, such kind of assumption is ''skillful'', but meaningful to arbitrary controllable dynamics in reality. It is reasonable to propose the terminal sliding mode control for the dynamics as follows:
 \begin{align}
-\tau = -g(\delta\varphi F(t) K_{d1}sign(S_{r4})),
+\tau = -\overrightarrow{g}(\delta\varphi F(t) K_{d1}\overrightarrow{sign}(S_{r4})),
 \end{align}
 where
 \begin{align}
 \begin{split}
 S_{r4} &= S_{q4}+\gamma\int^t_{t_0}S_{q4}(\varsigma) d\varsigma\\
-S_{q4} &= Sine(\Delta \dot q+\alpha\xi\Vert\Delta q\Vert^{\hat\alpha}sign(\Delta q)),\label{eq:Sr4}
+S_{q4} &= \overrightarrow{Sine}(\Delta \dot q+\alpha\xi\Vert\Delta q\Vert^{\hat\alpha}\overrightarrow{sign}(\Delta q)),\label{eq:Sr4}
 \end{split}
 \end{align}
 such that the finite convergence of the system~(\ref{eq:Sr4}) can be ensured by using terminal sliding mode theory.
