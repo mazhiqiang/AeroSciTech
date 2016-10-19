@@ -78,30 +78,47 @@ L=&T_t-V_g\\
 and utilize Lagrangian mechanics theory to obtain the following expression
 \begin{align}
 \begin{split}
-&\bar m l''-\bar m l\begin{bmatrix}\phi'^2+(\theta'+\Omega)^2\cos^2\phi\end{bmatrix}+\bar m l\Omega^2(1-3\cos^2\phi\cos^2\theta)=-\tau_t\\
-&\bar m l^2\cos^2\phi\theta''+2\bar m (\theta'+\Omega)l^2\cos^2\phi(l'/l-\phi'\tan\phi)+3\bar m \Omega^2l^2\sin\theta\cos\theta\cos^2\phi=\tau_\theta\\
-&\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\begin{bmatrix}(\theta'+\Omega)^2+3\bar m \Omega\cos^2\theta\end{bmatrix}=\tau_\phi.\label{eq:dynamics 1}
+&\bar m l''-\bar m l\begin{bmatrix}\phi'^2+(\theta'+\Omega)^2\cos^2\phi\end{bmatrix}+\bar m l\Omega^2(1-3\cos^2\phi\cos^2\theta)=-\tau_t+\tau_{td}\\
+&\bar m l^2\cos^2\phi\theta''+2\bar m (\theta'+\Omega)l^2\cos^2\phi(l'/l-\phi'\tan\phi)+3\bar m \Omega^2l^2\sin\theta\cos\theta\cos^2\phi=\tau_\theta+\tau_{\theta d}\\
+&\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\begin{bmatrix}(\theta'+\Omega)^2+3\bar m \Omega\cos^2\theta\end{bmatrix}=\tau_\phi+\tau_{\phi d},\label{eq:dynamics 1}
 \end{split}
 \end{align}
-One can construct the dimensionless transformation:
+\textcolor{red}{where $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster and the out-of-plane thruster, respectively, and $\tau_t d$, $\tau_\theta d$ and $\tau_\phi d$ stand for the bounded external disturbances. Typically, the dimensionless transformations simplify issues for researchers to design the deployment/retrieval scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
+\begin{align}
+\begin{split}
+&\lambda=l/L\\
+&d()/dt=\Omega d()/dv\\
+&\hat{\tau}_{t0}=-\tau_t/(\bar{m}\Omega^2L)\\
+&\hat{\tau}_\theta=\tau_\theta/(\bar{m}\Omega^2L^2)\\
+&\hat{\tau}_\phi = \tau_\phi/(\bar{m}\Omega^2L^2)\\
+&\hat{\tau}_{td}=\tau_{td}/(\bar{m}\Omega^2L)\\
+&\hat{\tau}_{\theta d}=\tau_{\theta d}/(\bar{m}\Omega^2L^2)\\
+&\hat{\tau}_{\phi d}= \tau_{\phi d}/(\bar{m}\Omega^2L^2)\label{eq:varcon0}.
+\end{split}
+\end{align}
+From~(\ref{eq:varcon0}), it is easy to find that the boundedness of $\hat{\tau}_{t0}$ is different from $\hat{\tau}_\theta$'s and $\hat{\tau}_\phi$'s, since $\hat{\tau}_{t0}$ just owns the negative boundedness due to positive $\tau_t$. However, this issue doesn't conform to conventional hypotheses about input saturation, i.e., for adaptive sliding mode controller design, $\hat{\tau}_{t0}$ doesn't fulfil the requirement of transformation of limited inputs, leading to the nonrigorous stability analysis~\cite{Hu2008552,6060930}. To cope better with the missing positive boundedness, we initiatively introduce the dimensionless length $\lambda$ into the dimensionless tension to establish a reasonable positive boundedness, and hence general limited inputs are produced by the novel dimensionless transformations:
 \begin{align}
 \begin{split}
 &\lambda=l/L\\
 &d()/dt=\Omega d()/dv\\
 &\hat{\tau}_t=-\tau_t/(\bar{m}\Omega^2L)+\lambda\\
 &\hat{\tau}_\theta=\tau_\theta/(\bar{m}\Omega^2L^2)\\
-&\hat{\tau}_\phi = \tau_\phi/(\bar{m}\Omega^2L^2)\label{eq:varcon},
+&\hat{\tau}_\phi = \tau_\phi/(\bar{m}\Omega^2L^2)\\
+&\hat{\tau}_{td}=\tau_{td}/(\bar{m}\Omega^2L)\\
+&\hat{\tau}_{\theta d}=\tau_{\theta d}/(\bar{m}\Omega^2L^2)\\
+&\hat{\tau}_{\phi d}= \tau_{\phi d}/(\bar{m}\Omega^2L^2)\label{eq:varcon}.
 \end{split}
 \end{align}
-such that Eq.~(\ref{eq:dynamics 1}) is able to be converted into dimensionless Euler-Lagrange dynamical equation described as follows:
+The obvious benefits of these transformations are that all the inputs own the positive and negative boundedness and hence satisfy the assumption about limited inputs of existing control laws~\cite{Hu2008552,6060930}. The obtained inputs also guarantee the rigorous stability analysis of the proposed sliding mode control in this paper. Based on the novel dimensionless transformations, Eq.~(\ref{eq:dynamics 1}) can be converted into dimensionless Euler-Lagrange dynamical equation described as follows:}
 \begin{align}
-H(\bm q)\ddot {\bm q}+C(\bm q,\dot{\bm q})\dot{\bm q}+G(\bm q) = \bm\tau,\label{eq:dynamic model}
+H(\bm q)\ddot {\bm q}+C(\bm q,\dot{\bm q})\dot{\bm q}+G(\bm q) = \bm\tau+\bm\tau_d,\label{eq:dynamic model}
 \end{align}
 where
 \begin{align}
 \begin{split}
 \bm q&= \begin{pmatrix}\lambda&\theta&\phi\end{pmatrix}^T\\
 \bm \tau&=\begin{pmatrix}\hat\tau_t&\hat\tau_\theta&\hat\tau_\phi\end{pmatrix}^T\\
+\bm\tau_d&=\begin{pmatrix}\hat\tau_{td}&\hat\tau_{\theta d}&\hat\tau_{\phi d}\end{pmatrix}^T\\
 H(\bm q) &= \begin{bmatrix}1 &0&0\\0 &\lambda^2\cos^2\phi&0\\0&0&\lambda^2\end{bmatrix}\\
 C(\bm q,\dot{\bm q}) &=\begin{bmatrix}0 &-(\lambda\dot \theta+2\lambda)\cos^2\phi&-\lambda\dot\phi\\(2\lambda+\lambda\dot \theta)\cos^2\phi&\lambda\dot \lambda\cos^2\phi-\lambda^2\dot\phi\sin\phi\cos\phi&-(\dot\theta+2)\lambda^2\sin\phi\cos\phi\\ \lambda\dot\phi&\lambda^2(\dot\theta+2)\sin\phi\cos\phi&\lambda\dot \lambda\end{bmatrix}\\
 G(\bm q) &=\begin{bmatrix}-\lambda\cos^2\phi+2\lambda+3\lambda\cos ^2\theta\cos^2\phi\\3\lambda^2\cos\theta\sin\theta\cos^2\phi\\\lambda^2+3\lambda^2\cos^2\theta\sin\phi\cos\phi\end{bmatrix}.
@@ -128,29 +145,53 @@ Before declaring the controller design, some basic precondition is prepared for 
 \end{align}
 where $Y_r = Y_r(\bm q,\dot{\bm q},\dot{\bm q}_r,\ddot{\bm q}_r)$. Based on results mentioned above, the open-loop error dynamics expressed by $S_r$ is able to be obtained, as follows:
 \begin{align}
-H(\bm q)\dot S_r+C(\bm q,\dot{\bm q})S_r=\bm\tau - Y_r\Theta\label{eq:dynamic model 2}
+H(\bm q)\dot S_r+C(\bm q,\dot{\bm q})S_r=\bm\tau +\bm\tau_d- Y_r\Theta\label{eq:dynamic model 2}
 \end{align}
 where $S_r$ is defined as
 \begin{align}
 S_r=\dot {\bm q}-\dot {\bm q}_r.\label{eq:Sr1}
 \end{align}
-We define the tracking error as $\Delta \bm q=\bm q-\bm q_d$, in which $\bm q_d$ is the reference trajectory with $\bm q_d(t)\in C^2$. For deriving the control scheme, some properties should be given out in advance.
-\begin{mypro}\cite{parra2003dynamic}
-Positive scalars $\Xi_i(i = 0,\ldots,6)$ always exist such that
+\textcolor{red}{For the system~(\ref{eq:dynamic model 2}) with ignoring the input limitation, the author in \cite{parra2003dynamic} has designed a nonlinear dynamic sliding PID controller with the zero initial condition:
+\begin{align}\begin{split}
+\dot {\bm q}_r&=\dot{\bm q}_d-\alpha\Delta\bm q-\gamma\bm\sigma\\
+\dot{\bm\sigma}&=\bm{sign}(S)\\
+S&=\Delta\dot{\bm q}+\alpha\Delta\bm q\label{eq:pid controller}
+\end{split}\end{align}
+where
+\begin{align}
+\bm{sign}(\bm x) = \left(sign(x_1),sign(x_2),\cdots,sign(x_n)\right)^T
+\end{align}
+for a vector $\bm x=\left(x_1,x_2,,\cdots,x_n\right)^T$. $\alpha$ and $\gamma$ are controller parameters which will be discussed in the controller design. Define the tracking error as $\Delta \bm q=\bm q-\bm q_d$, in which $\bm q_d$ is the desired trajectory with $\bm q_d(t)\in C^2$. However, the PID controller~(\ref{eq:pid controller}) can not be directly applied to the system~(\ref{eq:dynamic model 2}) with the input limitation, and in the subsequent section, we will utilize the saturated sliding mode technique to modify the PID controller~(\ref{eq:pid controller}) for the system~(\ref{eq:dynamic model 2}).} For deriving the proposed control scheme, some properties should be given out in advance.
+\begin{mypro}\cite{parra2003dynamic}\label{pro:1}
+\textcolor{red}{Positive scalars $\Xi_i(i = 0,\ldots,6)$ always exist such that
 \begin{align}
 \begin{split}
 \Vert H(\bm q)\Vert & \ge \zeta_{min}(H(\bm q))>\Xi_0>0\\
 \Vert H(\bm q)\Vert & \le \zeta_{max}(H(\bm q))<\Xi_1<\infty\\
 \Vert C(\bm q,\dot {\bm q})\Vert & \le \Xi_2\Vert\dot {\bm q}\Vert+\Xi_3\\
 \Vert G(\bm q)\Vert & \le \Xi_4\\
-\Vert \dot {\bm q}_r\Vert & \le \Xi_5+\alpha\Vert\Delta \bm q\Vert+\gamma\Vert\sigma\Vert\\
+\Vert \dot {\bm q}_r\Vert & \le \Xi_5+\alpha\Vert\Delta \bm q\Vert+\gamma\Vert\bm\sigma\Vert\\
 \Vert \ddot {\bm q}_r\Vert & \le \Xi_6+\alpha\Vert\Delta \dot {\bm q}\Vert\\
 \end{split}
 \end{align}
-where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively, and $\alpha$ and $\gamma$ are controller parameters which will be discussed later on. Furthermore, one can have $Y_r\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta \bm q,\Delta \dot {\bm q},\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi$, in which $\varphi$ is a positive scalar determined according to the system state.
+where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively. Furthermore, one can have $Y_r\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta \bm q,\Delta \dot {\bm q},\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi_0$, in which $\varphi_0$ is a positive scalar determined according to the system state.}
 \end{mypro}
+
+\begin{myas}
+\textcolor{red}{
+In the low orbit altitude, the external disturbance $\bm\tau_d$ contains gravity gradient torque, aerodynamic interference and solar radiation pressure torque. According to existing studies, the values of the solar radiation pressure and the aerodynamic torque are about $1\times10^{-5}$ Nm, and meanwhile the gradient torque is in the range of $1\times10^{-5}$ Nm. Typically, the space perturbation can be regarded as the periodic function in this paper, and the period equals the orbital period $5000$ s~\cite{Inamori2015192}. Hence, the external disturbance can be described by the following expression
+\begin{align}
+\bm\tau_d=\left(0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000)\right)^T.
+\end{align}
+Therefore, the bounded external disturbance satisfy
+\begin{align}
+\Vert\bm\tau_d\Vert\le\varphi_1<\infty,
+\end{align}
+where $\varphi_1$ is a positive scalar.
+}
+\end{myas}
 \subsection{Saturated sliding mode control subject to input limitation}
-The process above can frame a conventional dynamic sliding PID control scheme, exactly, a PD controller, which can regulate the dynamics of n-link robotic manipulator if extending the dimension in the derivation above \cite{parra2003dynamic}. However, it is not able to regulate the dynamics of the deployment as desired theoretically, because the input $\tau$ in the PID controller is not confined to the characteristics of the tension. For coping with the issue about the bounded input, we develop the dynamic sliding mode control with the experience of saturated manifold, which is also a popular technique in the control of Lagrangian system.\par
+The process above can frame a conventional dynamic sliding PID control scheme, which can regulate the dynamics of n-link robotic manipulator if extending the dimension in the derivation above \cite{parra2003dynamic}. However, it is not able to regulate the dynamics of the deployment as desired theoretically, because the input $\tau$ in the PID controller is not confined to the characteristics of the tension. For coping with the issue about the bounded input, we develop the dynamic sliding mode control with the experience of saturated manifold, which is also a popular technique in the control of Lagrangian system.\par
 Before giving out main results, some routine lemmas emerge in advance to support the derivation.
 \begin{mylem}\label{lemma:1}
 Consider a quasi-saturated function as follows:
@@ -197,7 +238,7 @@ R_M(\tau) &= \begin{bmatrix}R(\hat\tau_t)&0&0\\0&R(\hat\tau_\theta)&0\\0&0&R(\ha
 \end{align}
 and in order to design the saturated sliding mode  control for the dynamics of the deployment, the $Sine$ function for vectors is specified as:
 \begin{align}
-\bm{Sine}(\bm q)=\begin{pmatrix}Sine(\lambda),Sine(\theta),Sine(\phi)\end{pmatrix}^T.
+\bm{Sine}(\bm x)=\begin{pmatrix}Sine(x_1),Sine(x_2),\cdots,Sine(x_n)\end{pmatrix}^T.
 \end{align}
 \end{myrem}
 The lemmas above introduce some properties about saturated functions, with which the dynamic sliding mode control subject to input limitation for Lagrangian system~(\ref{eq:dynamic model}) can be designed by using the subsequent theorem.
@@ -217,19 +258,16 @@ in which, $F(0)>0$, and the derivative of $F(t)$ has the characteristics:
 \begin{align}
 \frac{d}{dt}F(t) = \delta\varphi S_{r2}^T K_1K_de^{-2K_1^{-1}F^{-1}(t)}\bm{sign}(S_{r2})
 \end{align}
-where $K_1\in R^{2\times 2}$ is a positive define diagonal matrix, which will be given out later, and if $K\in R^{2\times 2}$, define
+where $K_1\in R^{3\times 3}$ is a positive define diagonal matrix, which will be given out later, and if $K\in R^{3\times 3}$, define
 \begin{align}
 e^K=
 \begin{bmatrix}
-e^{K_{11}}&e^{K_{12}}\\
-e^{K_{21}}&e^{K_{22}}
+e^{K_{11}}&e^{K_{12}}&e^{K_{13}}\\
+e^{K_{21}}&e^{K_{22}}&e^{K_{23}}\\
+e^{K_{31}}&e^{K_{32}}&e^{K_{33}}
 \end{bmatrix}.
 \end{align}
-$\gamma$ is a positive scalar, such that the deployment dynamics can be regulated as desired.
-\begin{align}
-\bm{sign}(\bm x) = \left(sign(x_1),sign(x_2),\cdots,sign(x_n)\right)^T,
-\end{align}
-for a vector $\bm x=\left(x_1,x_2,,\cdots,x_n\right)^T$.
+$\gamma$ is a positive scalar, such that the deployment dynamics can be regulated as desired. $\varphi$ is the boundedness of the lumped uncertainty.
 \end{mythm}
 \begin{proof}
 Consider dynamic coordinates change $S_{r2}$ with the regular error variable but not the $Sine$ form:
@@ -249,6 +287,8 @@ Introducing the limited input~(\ref{eq:slider control}) and replacing the dynami
 \begin{align}
 H(q)\dot S_{r2} = -\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))-C(q,\dot q)S_{r2}-Y_{r2}\Theta.
 \end{align}
+Similar to Properties~\ref{pro:1}, one can find a positive scalar $\varphi_2$ such that $\Vert Y_{r2}\Theta\Vert\le\varphi_2$, and moreover the boundedness of the lumped uncertainty $\varphi$ satisfies $\varphi>\varphi_1+\varphi_2$.
+
 Select the Lyapunov function candidate
 \begin{align}
 V=\frac{1}{2}S_{r2}^TH(q)S_{r2}+\frac{1}{2}v^2,
@@ -257,10 +297,10 @@ where $v=F(t)e^{K_1^{-1}F^{-1}(t)}$ and $\frac{1}{2}v^2$ is an auxiliary Lyapuno
 \begin{align}
 \begin{split}
 \dot V &= S_{r2}^TH(q)\dot S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}+v\dot v\\
-&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))-S_{r2}^TC(q,\dot q)S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}-S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))-S_{r2}^TY_{r2}\Theta+\frac{1}{2}S_{r2}^T(\dot H(q)-2C(q,\dot q))S_{r2}+v\dot v\\
-&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))-S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -S_{r2}^TR_M(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))\delta\varphi F(t) K_d\bm{sign}(S_{r1})-S_{r2}^TY_{r2}\Theta+v\dot v.\label{eq:V1_1}
+&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))+S_{r2}^T\bm\tau_d-S_{r2}^TC(q,\dot q)S_{r2}+\frac{1}{2}S_{r2}^T\dot H(q)S_{r2}-S_{r2}^TY_{r2}\Theta+v\dot v\\
+&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))+S_{r2}^T\bm\tau_d-S_{r2}^TY_{r2}\Theta+\frac{1}{2}S_{r2}^T(\dot H(q)-2C(q,\dot q))S_{r2}+v\dot v\\
+&= -S_{r2}^T\bm{g}(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))+S_{r2}^T\bm\tau_d-S_{r2}^TY_{r2}\Theta+v\dot v\\
+&= -S_{r2}^TR_M(\delta\varphi F(t) K_d\bm{sign}(S_{r1}))\delta\varphi F(t) K_d\bm{sign}(S_{r1})+S_{r2}^T\bm\tau_d-S_{r2}^TY_{r2}\Theta+v\dot v.\label{eq:V1_1}
 \end{split}
 \end{align}
 Since the command $ -\delta\varphi F(t) K_dS_{r1}$ is bounded, one can select reasonably small positive scalars $c_1$ and $c_2$ such that $0<c_1\le R(\hat\tau_t)<1$ and $0<c_2\le R(\hat\tau_\theta)<1$, and obtain a diagonal matrix as follows:
@@ -274,7 +314,7 @@ v\dot v =\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})\bm{sign}(S_{r2}),
 utilizing $\bm{sign}(S_{r1})=\bm{sign}(S_{r2})$ and $K_1$ proceeds to rewrite Eq.~(\ref{eq:V1_1}) as:
 \begin{align}
 \begin{split}\label{eq:V1_2}
-\dot V&\le -S_{r2}^T\delta\varphi  K_1K_dF(t)\bm{sign}(S_{r2})+S_{r2}^T\varphi \bm{sign}(S_{r2})+\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})\bm{sign}(S_{r2})\\
+\dot V&\le -S_{r2}^T\delta\varphi  K_1K_dF(t)\bm{sign}(S_{r2})+S_{r2}^T(\varphi_1+\varphi_2) \bm{sign}(S_{r2})+\varphi\delta S_{r2}^T K_1K_d(F(t)-K_1^{-1})\bm{sign}(S_{r2})\\
 &\le \varphi S_{r2}^T\bm{sign}(S_{r2})-\varphi\delta S_{r2}^T K_d\bm{sign}(S_{r2})
 \end{split}
 \end{align}
@@ -331,7 +371,7 @@ where
 S_{r3} &= S_{q3}+\gamma\int^t_{t_0}\Vert S_{q3}(\varsigma)\Vert^{\hat\alpha}  \bm{sign}(S_{q3}(\varsigma))d\varsigma\label{eq:Sr3}\\
 S_{q3} &= \Delta \dot q+\alpha \bm{Sine}(\xi\Delta q),\label{eq:Sq3}
 \end{align}
-where $0<\hat\alpha< 1$, such that the dynamics~(\ref{eq:dynamic model 2}) can be regulated as desired.
+where $0<\hat\alpha< 1$, such that the dynamics~(\ref{eq:dynamic model 2}) can be regulated as desired. $\varphi$ is the boundedness of the lumped uncertainty, and can be obtained by referring to Theorem~\ref{thm:1}.
 \end{mythm}
 \begin{proof}
 The proof is similar to Theorem~\ref{thm:1}, and omitted here.
@@ -351,7 +391,7 @@ S_{r4} &= S_{q4}+\gamma\int^t_{t_0}S_{q4}(\varsigma) d\varsigma\\
 S_{q4} &= \bm{Sine}(\Delta \dot q+\alpha\xi\Vert\Delta q\Vert^{\hat\alpha}\bm{sign}(\Delta q)),\label{eq:Sr4}
 \end{split}
 \end{align}
-such that the finite convergence of the system~(\ref{eq:Sr4}) can be ensured by using terminal sliding mode theory.
+such that the finite convergence of the system~(\ref{eq:Sr4}) can be ensured by using terminal sliding mode theory. $\varphi$ is the boundedness of the lumped uncertainty, and can be obtained by referring to Theorem~\ref{thm:1}.
 \end{myrem}
 \section{Simulation studies}\label{sec:4}
 In this section, the simulations of the regulation of the deployment dynamics with saturated sliding mode control, saturated terminal sliding mode control and quasi-saturated terminal sliding mode control, and for clarity, these controllers are abbreviated as S-SMC, ST-SMC and QSF-SMC, respectively. The parameters of these controllers can selected as follows: $\delta=1.1$, $\varphi= 1\times 10^{-3}$, $\alpha = 0.8$, $K_d(K_{*})=1$, $\gamma = 0.1$ and $\hat\alpha=0.6$.\par
