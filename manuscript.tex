@@ -204,18 +204,46 @@ sin(x)&\vert x\vert<\pi/2
 \end{align}
 and it's notable that the function above is saturated or bounded and owns an important property: $\vert Sine(x)\vert\le\vert x\vert$, $\forall x$. The geometric illustration is shown in Figure~\ref{fig:2}, from which an interesting property can be found by sliding the curve $y=Sine(x)$ along the axis $x=0$ in the range $[-\Delta h,\Delta h]$, and once the function $y=Sine(x)+\Delta h$ settles, one can chose the function $y = x+arcsin(\Delta h)$ such that
 \begin{align}
-&\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert\\
-&sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)), \forall x, \vert\Delta h\vert<1.
+&\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert\label{eq:lem11}\\
+&sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)), \forall x, \vert\Delta h\vert<1\label{eq:lem12}.
 \end{align}
-in which, the characteristics of the signum above can be obtained by \textcolor{red}{checking} if the sign of $y=(x_1+x_2)(Sine(x_1)+Sine(x_2))$ is alwasys nonnegative.
 \end{mylem}
+\begin{proof}
+For relation~(\ref{eq:lem11}), let $y=Sine(x)+\Delta h-x-arcsin(\Delta h)$, and we can get its derivative
+\begin{align}
+\begin{cases}
+y' = -1,&x\ge\pi/2,x\le-\pi/2\\
+y' = \cos x - 1,&\vert x\vert<\pi/2,
+\end{cases}
+\end{align}
+where $y'<0$ means $y$ is a monotone decreasing function. As $x=-arcsin(\Delta h)$, $y=0$, according to the definition of $Sine(x)$, we proceed to get
+$$\left.
+\begin{aligned}
+x\ge-arcsin(\Delta h), y\le0&\Rightarrow 0\le Sine(x)+\Delta h\le x+arcsin(\Delta h)\\
+x<-arcsin(\Delta h), y>0&\Rightarrow 0> Sine(x)+\Delta h>x+arcsin(\Delta h)\end{aligned}\right\}\\\\
+\Rightarrow\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert.
+$$
+For Eq.~(\ref{eq:lem12}), considering the case $Sine(x)+\Delta h>0$, when $\vert x\vert<\pi/2$, $Sine(x)+\Delta h>0$ becomes
+\begin{align}
+sin(x)+\Delta h>0&\Rightarrow x>-arcsin(\Delta h)\\
+&\Rightarrow x+arcsin(\Delta h)>0,
+\end{align}
+since $y=arcsin(x)$ is a monotone increasing function. We only need to consider $x\ge\pi/2$ instead of $\vert x\vert\ge\pi/2$ for $x\le-\pi/2$ is meaningless in the case $Sine(x)+\Delta h>0$. It is obvious that $x+arcsin(\Delta h)>0$ due to $\vert arcsin(\Delta h)\vert<\pi/2$. Therefore, we can get
+\begin{align}
+sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)),Sine(x)+\Delta h>0,
+\end{align}
+and similarly the following equation is reasonable:
+\begin{align}
+sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)),Sine(x)+\Delta h\le0.
+\end{align}
+\end{proof}
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{paper4_fig2.eps}
 \caption{$y =Sine(x)$ and $y=Sine(x)+\Delta h$}
 \label{fig:2}
 \end{figure}
-\begin{mylem}\label{lemma:2}
+\begin{mylem}\cite{Hu2008552}\label{lemma:2}
 Consider a limited function owning the subsequent property:
 \begin{align}
 g(y) &= R(y)y\in[y_{min},y_{max}]\\
@@ -267,7 +295,7 @@ e^{K_{21}}&e^{K_{22}}&e^{K_{23}}\\
 e^{K_{31}}&e^{K_{32}}&e^{K_{33}}
 \end{bmatrix}.
 \end{align}
-$\gamma$ is a positive scalar, such that the deployment dynamics can be regulated as desired. $\varphi$ is the boundedness of the lumped uncertainty.
+\textcolor{red}{$\varphi$ is the boundedness of the lumped uncertainty. $\gamma$ is a small or  time-varying positive scalar, $\varphi>1$ and $K_d$ is the designer parameter, such that the deployment dynamics can be regulated as desired.}
 \end{mythm}
 \begin{proof}
 Consider dynamic coordinates change $S_{r2}$ with the regular error variable but not the $Sine$ form:
