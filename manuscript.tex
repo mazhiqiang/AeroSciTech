@@ -36,20 +36,20 @@
 This paper presents a novel adaptive dynamic sliding mode scheme for the deployment of the tethered satellite system. \textcolor{red}{To overcome the limited inputs of the dynamic model, a new scalable dimensionless transformation and strictly bounded terms are designed, which guarantee the existence of the ratio between limited inputs and command signals.} The adaptive saturated sliding mode control scheme is proposed to govern the tether deployment by introducing the adaptive rate into the system gain. The stability analysis indicates that this measure can eliminate the uncertainty caused by the input limitation and guarantee the asymptotically stability of the deployment dynamics. \textcolor{red}{Finally, numerical simulations are presented to verify the effectiveness of the proposed control laws.}
 \end{abstract}
 \begin{keyword}
-Tethered satellite;  Sliding mode control;  Input limitation; Adaptive control
+Tethered satellite system;  Sliding mode control;  Input limitation; Adaptive control
 \end{keyword}
 \end{frontmatter}
 \section{Introduction}
-The deployment is the key technology of the space tethered satellite system~\cite{wen2008advances,yousefian2015anti}, which supports various applications for space exploration and scientific research, such as space debris removals, space elevators, satellite de-orbits and the tethered space robots~\cite{zhao2014thrust,kojima2015mission,zhong2013dynamics,zhong2013long,huang2014optimal,Huang2016Impact,Huang201637,Huang2016}. \textcolor{red}{Many international space research institutes have launched some orbital, suborbital and ground experiments, such as TSS-1R, SEDS, MAST and YES2, in an effort to verify the feasibility of the proposed theoretical and simulation design for the deployment of the tethered satellite system~\cite{williams2012review,robitaille2006interpreting,stone1998tss,williams2009yes2}. These experimental results intensively help researchers proceed to promote advanced mechanics, kinetic and control studies, to tackle the future challenges of space activities~\cite{yu2016nonlinear,wen2015space,aslanov2016swing,meng2016lyapunov,zhang2015line,Xu2016Hybrid}.}\par
+The deployment is the key technology of the space tethered satellite system (TSS)~\cite{wen2008advances,yousefian2015anti}, which supports various applications for space exploration and scientific research, such as space debris removals, space elevators, satellite de-orbits and the tethered space robots~\cite{zhao2014thrust,kojima2015mission,zhong2013dynamics,zhong2013long,huang2014optimal,Huang2016Impact,Huang201637,Huang2016}. \textcolor{red}{Many international space research institutes have launched some orbital, suborbital and ground experiments, such as TSS-1R, SEDS, MAST and YES2, in an effort to verify the feasibility of the proposed theoretical and simulation design for the deployment of the TSS~\cite{williams2012review,robitaille2006interpreting,stone1998tss,williams2009yes2}. These experimental results intensively help researchers proceed to promote advanced mechanics, kinetic and control studies, to tackle the future challenges of space activities~\cite{yu2016nonlinear,wen2015space,aslanov2016swing,meng2016lyapunov,zhang2015line,Xu2016Hybrid}.}\par
 
-\textcolor{red}{Recent scientific researches about deployment of the tethered satellite system focus on the stabilization of the dynamics, and have provided different kinds of control schemes, including tension, thruster, electrodynamic and Coulomb approaches~\cite{kojima2015stabilisation,qi2016dynamics,zhong2016research}.} Among these stabilization strategies, the hybrid tension and thruster control technique has been a great boost to new developments of the deployment of the tethered satellite system. Iki et al. implemented the ground experiment of an electrodynamic tether deployment from a spool-type reel, and utilized the thruster to guarantee the deployment of kilometers-length space tether~\cite{iki2014experiments}. \textcolor{red}{Aslanov et al. presented a novel model about the spatial motion of a large passive satellite and the tug connected by space tether, and the motion of the overall system was excited by a thrust force acting on the tug~\cite{aslanov2013dynamics}.} Huang et al. investigated the attitude and deployment dynamics of the tethered space robot from the standpoint of thruster consumption~\cite{huang2015coupling}. Jung et al. adopted thruster scheme to achieve the ideal deployment rate during the deployment of three-body tethered satellites~\cite{jung2015nonlinear}. \textcolor{red}{Liu et al. equipped the subsatellite with the thruster system, consisting of four pairs of thrusters, in order to regulate the attitude and deployment dynamics~\cite{liu2014attitude}. Zakrzhevskii divided the deployment process into two stages: in the first stage, the thruster was used to eject to the desired starting point of the next stage, and in the second stage, the tether was adjusted to the stable vertical configuration using tension generated by friction~\cite{zakrzhevskii2016method}. Mantellato et al. reported the thrust-aided deployment of tape tethers driven by both the tension and thruster force~\cite{mantellato2015thrust}. These hybrid strategies has several advantages, such as simplifying the input model greatly, non-environmental dependence (magnetic field dependence), easy assembly and physical implementation, and thus is broadly utilized in engineering applications compared with other control strategies.}\par
+\textcolor{red}{Recent scientific researches about deployment of the TSS focus on the stabilization of the dynamics, and have provided different kinds of control schemes, including tension, thruster, electrodynamic and Coulomb approaches~\cite{kojima2015stabilisation,qi2016dynamics,zhong2016research}.} Among these stabilization strategies, the hybrid tension and thruster control technique has been a great boost to new developments of the deployment of the TSS. Iki et al. implemented the ground experiment of an electrodynamic tether deployment from a spool-type reel, and utilized the thruster to guarantee the deployment of kilometers-length space tether~\cite{iki2014experiments}. \textcolor{red}{Aslanov et al. presented a novel model about the spatial motion of a large passive satellite and the tug connected by space tether, and the motion of the overall system was excited by a thruster force acting on the tug~\cite{aslanov2013dynamics}.} Huang et al. investigated the attitude and deployment dynamics of the tethered space robot from the standpoint of thruster consumption~\cite{huang2015coupling}. Jung et al. adopted thruster scheme to achieve the ideal deployment rate during the deployment of three-body tethered satellites~\cite{jung2015nonlinear}. \textcolor{red}{Liu et al. equipped the subsatellite with the thruster system, consisting of four pairs of thrusters, in order to regulate the attitude and deployment dynamics~\cite{liu2014attitude}. Zakrzhevskii divided the deployment process into two stages: in the first stage, the thruster was used to eject to the desired starting point of the next stage, and in the second stage, the tether was adjusted to the stable vertical configuration using tension generated by friction~\cite{zakrzhevskii2016method}. Mantellato et al. reported the thruster-aided deployment of tape tethers driven by both the tension and thruster force~\cite{mantellato2015thrust}. These hybrid strategies has several advantages, such as simplifying the input model greatly, non-environmental dependence (magnetic field dependence), easy assembly and physical implementation, and thus is broadly utilized in engineering applications compared with other control strategies.}\par
 
-There also exist some obstacles in the hybrid control design. Particularly, it's a prime problem that tension actuators and thrusters are both constrained by physical and chemical conditions, i.e., the tether is not available to be repressed like the stick, and meanwhile too big tether length rate might break the space tether. Also, the thruster can not provide infinite force~\cite{martinez1998spacecraft}. Hence the tension and thruster force for the deployment/retrievial are both limited, and in the view of control theory, the phenomena usually causes the input limitation of a dynamic system. Substituting limited inputs into unmodified conventional control scheme designed for systems with unlimited inputs results in poor performance or instability, and theoretically, such kind of implement is unreasonable. Hence to cope with input limitation in the tethered satellite system (TSS), many scientific researchers spent much effort on restricting input, providing many solutions on satellite arrangements and deployments. Huang et al. proposed an adaptive postcapture backstepping control of the tethered space robot, and analyzed the effect of constrained input by using specific auxiliary design systems~\cite{huang2015adaptive}. Wen et al. took into account the positive bounded tension constraint by designing the feedback control with special saturation technique~\cite{wen2016constrained}, and Wen also proposed some remarkable achievements using optimal control for deployment~\cite{wen2008optimal}. Liu et al. reported the variable structure scheme for the deployment with thruster control, where the thruster is used to guarantee the positive tension during the mission~\cite{yingying2012variable}. In summary, existing studies deal with the major issue about the deployment with restricted tension and thruster force in two ways, accordingly, the suitable physical compensation and the elaborate design of limited input. In aspect of designing elaborate limited inputs, as Wen et al. explained, the limited terms, including the tension and the states of deployment dynamics, can be viewed as the solution of a nonlinear optimal control issue~\cite{wen2015tension}. \textcolor{red}{Hu reported an adaptive sliding mode control law with saturated input by using reduced sliding dynamic design approach~\cite{Hu2009Robust}, which requires an assumption that the command signal is bounded strictly, and for actual physical systems, this assumption always exits.} In this paper, a new dynamic adaptive saturated sliding mode  control for the deployment of the tethered satellite system is studied. For coping with the input saturation in the hybrid control strategy, the strictly saturated command signal is constructed with Sine saturation function. Based on the feature of the saturated command, an adaptive rate is introduced into the controller design to remove the effect of the input limitation theoretically. In order to improve the performance of the sliding phase, the terminal attractor is incorporated into the design of the ideal sliding surface. We perform numerical simulations to illustrate that the stabilization of the deployment is accomplished by the controller designed in spite of the input limitation.\par
+There also exist some obstacles in the hybrid control design. Particularly, it's a prime problem that tension actuators and thrusters are both constrained by physical and chemical conditions, i.e., the tether is not available to be repressed like the stick, and meanwhile too big tether length rate might break the space tether. Also, the thruster can not provide infinite force~\cite{martinez1998spacecraft}. Hence the tension and thruster force for the deployment/retrievial are both limited, and in the view of control theory, the phenomena usually causes the input limitation of a dynamic system. Substituting limited inputs into unmodified conventional control scheme designed for systems with unlimited inputs results in poor performance or instability, and theoretically, such kind of implement is unreasonable. Hence to cope with input limitation in the TSS, many scientific researchers spent much effort on restricting input, providing many solutions on satellite arrangements and deployments. Huang et al. proposed an adaptive postcapture backstepping control of the tethered space robot, and analyzed the effect of constrained input by using specific auxiliary design systems~\cite{huang2015adaptive}. Wen et al. took into account the positive bounded tension constraint by designing the feedback control with special saturation technique~\cite{wen2016constrained}, and Wen also proposed some remarkable achievements using optimal control for deployment~\cite{wen2008optimal}. Liu et al. reported the variable structure scheme for the deployment with thruster control, where the thruster is used to guarantee the positive tension during the mission~\cite{yingying2012variable}. In summary, existing studies deal with the major issue about the deployment with restricted tension and thruster force in two ways, accordingly, the suitable physical compensation and the elaborate design of limited input. In aspect of designing elaborate limited inputs, as Wen et al. explained, the limited terms, including the tension and the states of deployment dynamics, can be viewed as the solution of a nonlinear optimal control issue~\cite{wen2015tension}. \textcolor{red}{Hu reported an adaptive sliding mode control law with saturated input by using reduced sliding dynamic design approach~\cite{Hu2009Robust}, which requires an assumption that the command signal is bounded strictly, and for actual physical systems, this assumption always exits.} In this paper, a new dynamic adaptive saturated sliding mode  control for the deployment of the TSS is studied. For coping with the input saturation in the hybrid control strategy, the strictly saturated command signal is constructed with Sine saturation function. Based on the feature of the saturated command, an adaptive rate is introduced into the controller design to remove the effect of the input limitation theoretically. In order to improve the performance of the sliding phase, the terminal attractor is incorporated into the design of the ideal sliding surface. We perform numerical simulations to illustrate that the stabilization of the deployment is accomplished by the controller designed in spite of the input limitation.\par
 The paper is organized as follows: Section~\ref{sec:2} introduces the standard mathematical model of the deployment of the TSS. Section~\ref{sec:3} designs the adaptive saturated sliding mode control laws with input limitation for the dynamics, and these simulations are exhibited in Section~\ref{sec:4} to reveal the effectiveness and efficiency. The conclusion is given in Section~\ref{sec:5}.
 \section{Mathematical model}\label{sec:2}
-Figure \ref{fig:1} shows all the elements of the TSS via the geometric representation. In the figure, it is apparent that $OXYZ$ denotes the inertial frame, the origin $O$ of which is arranged at the the earth's core. $OX$ and $OY$ are mutually perpendicular axes on the equatorial plane with $OX$ pointing to the spring equinox, and $OZ$ is perpendicular to the equatorial plane, bundling the axis of the earth upwards. The frame of $OXYZ$ fulfills the right-hand rule, hence the direction of axis $OY$ is identified. Orbital coordinate system is denoted as $O_2xyz$ with the origin $O_2$ located at the center of the TSS. $O_2x$ points to the orbital direction, meanwhile $O_2z$ is along the direction downwards towards to the core of the earth, generating the axis $O_2y$ by utilizing the right-hand rule. $\theta$ and $\phi$ stand for the in-plane and out-of-plane angle, respectively. Another coordinate system $O_2x'y'z'$ represents the TSS frame with $O_2z'$ pointing to the subsatellite along the tether, and $O_2x'y'z'$ can be obtained by rotating $O_2xyz$ around the fixed origin $O_2$. $\bm R_0$ denotes the position vector between $O_2$ and $O$.\par
-\textcolor{red}{In the analysis of the deployment of the TSS, there is a primary assumption that the movement of entire system is similar to a ``rolling ball'' behavior with three DOFs modelled, and it is reasonable to invoke the spherical coordinates to describe the behavior.} During space mission, the mass of the tether is much smaller than that of the mother satellite, and hence it is always ignored sufficiently. Some other assumptions are obvious and as follows. \textcolor{red}{The sizes of satellites are small compared with the length of the tether, and hence a satellite can be regard as a particle if the tether is long enough. Typically, the mass ration between mother satellite and subsatellite, i.e., in YES2, the mother satellite mass is 6530~$kg$, and the subsatellite mass is 12~$kg$~\cite{Williams2008}. Due to the tiny mass ratio between the satellites, the deployment of the subsatellite will not affect the motion of the mother satellite and keep the nominal orbit during the whole mission.} The deployment is regulated by the tension and thrusters, and to guarantee the establishment of the ``rolling ball'' model, the tether remains inextensible, straight and stiff all the time.\par
-Symbols used in the model are defined as follows. $R_0$ is a positive scaler meaning the radius of orbit without disturbance, and $\Omega = \sqrt{\mu_e/R_0^3}$ is the orbital angular velocity where $\mu_e$ is the coefficient of the Earth gravity field.\par
+\textcolor{red}{Figure \ref{fig:1} shows all the elements of the TSS via the geometric representation. In the figure, the axes of the coordinate frame of $OXYZ$ passes through the center of the earth. $OX$ and $OY$ are mutually perpendicular axes on the equatorial plane with $OX$ pointing to the spring equinox, and $OZ$ is perpendicular to the equatorial plane, bundling the axis of the earth upwards. The axis $OY$ completes the right-hand triad. The orbital coordinate frame is denoted as $O_2xyz$ with the origin $O_2$ located at the mass center of the TSS. $O_2x$ is directed in the direction of orbital velocity, meanwhile $O_2z$ is defined to point towards the center of the earth, generating the axis $O_2y$ by utilizing the right-hand triad. The origin of the TSS coordinate frame $O_2x'y'z'$ is also fixed at the mass center of the TSS, and the axis $O_2z'$ is directed along the tether and points to the subsatellite. The orientation of $O_2xyz$ relative to the coordinate frame $O_2x'y'z'$ indicates the in-plane and out-of-plane dynamics, where $\theta$ and $\phi$ stand for the in-plane angle and out-of-plane angle, respectively. $\bm R_0$ denotes the position vector between $O_2$ and $O$.}\par
+\textcolor{red}{In the analysis of the deployment of the TSS, there is a primary assumption that the movement of entire system is similar to a ``rolling ball'' behavior with three DOFs modelled, and it is reasonable to invoke the spherical coordinates to describe the behavior~\cite{Williams2008}.} During space mission, the mass of the tether is much smaller than that of the mother satellite, and hence it is always ignored sufficiently. Some other assumptions are obvious and as follows. \textcolor{red}{The sizes of satellites are small compared with the length of the tether, and hence a satellite can be regard as a particle if the tether is long enough. Actually, the mass ratio between the subsatellite and the mother satellite is tiny, i.e., in YES2, the mother satellite mass is 6530~$kg$, and the subsatellite mass is 12~$kg$~\cite{Williams2008}. The deployment of the subsatellite will not affect the motion of the mother satellite due to the tiny mass ratio between the satellites and will keep the nominal orbit during the whole mission.} The deployment is regulated by the tension and thrusters, and to guarantee the establishment of the ``rolling ball'' model, the tether remains inextensible, straight and stiff all the time.\par
+Symbols used in the model are defined as follows. $R_0$ is a positive scaler meaning the radius of orbit, and $\Omega = \sqrt{\mu_e/R_0^3}$ is the orbital angular velocity where $\mu_e$ is the coefficient of the earth gravity field.\par
 %Based on the assumption above, the kinetic energy and the potential energy of the deployment dynamics can be described as~\cite{Mantellato2015}:
 \begin{figure}[http]
 \centering
@@ -75,7 +75,7 @@ Symbols used in the model are defined as follows. $R_0$ is a positive scaler mea
 %&-\frac{\bar m\Omega^2l^2}{2}\begin{pmatrix}1-3\cos^2\theta\cos^2\phi\end{pmatrix}+\frac{3m\Omega^2R_0^2}{2},
 %\end{split}
 %\end{align}
-Based on the assumption above and Lagrangian mechanics theory, we can directly obtain the following expression for the tethered satellite system~\cite{Sun2014304,Mantellato2015}
+Based on the assumption above and Lagrangian mechanics theory, we can directly obtain the following expression for the TSS~\cite{Sun2014304,Mantellato2015}
 \begin{align}
 \begin{split}
 &\bar m l''-\bar m l\begin{bmatrix}\phi'^2+(\theta'+\Omega)^2\cos^2\phi\end{bmatrix}+\bar m l\Omega^2(1-3\cos^2\phi\cos^2\theta)=-\tau_t+\tau_{td}\\
@@ -83,7 +83,7 @@ Based on the assumption above and Lagrangian mechanics theory, we can directly o
 &\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\begin{bmatrix}(\theta'+\Omega)^2+3\bar m \Omega\cos^2\theta\end{bmatrix}=\tau_\phi+\tau_{\phi d},\label{eq:dynamics 1}
 \end{split}
 \end{align}
-\textcolor{red}{where, $m = m_1+m_2$ stands for the total mass of the system, $m_1$ and $m_2$ of which denote the mass of the mother satellite and of the subsatellite, respectively. \textcolor{red}{$(\cdot)'$ represents a first derivative with respect to time, and $l$ means the tether length connecting the satellites. $\theta$ and $\phi$ depict the roll and pitch dynamics of the TSS. For clarity, $m_1m_2/m$ is rewritten as $\bar m$. $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster and the out-of-plane thruster, respectively, and $\tau_t d$, $\tau_{\theta d}$ and $\tau_{\phi d}$ stand for the bounded external disturbances.} Typically, the dimensionless transformations simplify issues for researchers to design the deployment/retrieval scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
+\textcolor{red}{where, $m = m_1+m_2$ stands for the total mass of the system, $m_1$ and $m_2$ of which denote the mass of the mother satellite and of the subsatellite, respectively. \textcolor{red}{$(\cdot)'$ represents a first derivative with respect to time, and $l$ means the tether length connecting the satellites. $\theta$ and $\phi$ depict the roll and pitch dynamics of the TSS. For clarity, $m_1m_2/m$ is rewritten as $\bar m$. $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster force and the out-of-plane thruster force, respectively, and $\tau_{t d}$, $\tau_{\theta d}$ and $\tau_{\phi d}$ stand for the bounded external disturbances correspondingly.} Typically, the dimensionless transformations simplify issues for researchers to design the deployment/retrieval scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
 \begin{align}
 \begin{split}
 &\lambda=l/L\\
@@ -109,7 +109,7 @@ From~(\ref{eq:varcon0}), it is easy to find that the boundedness of $\hat{\tau}_
 &\hat{\tau}_{\phi d}= \tau_{\phi d}/(\bar{m}\Omega^2L^2)\label{eq:varcon}.
 \end{split}
 \end{align}
-The obvious benefits of these transformations are that all the inputs own the positive and negative boundedness and hence satisfy the assumption about limited inputs of existing control laws~\cite{Hu2008552,6060930}. The obtained inputs also guarantee the rigorous stability analysis of the proposed sliding mode control in this paper. Based on the novel dimensionless transformations, Eq.~(\ref{eq:dynamics 1}) can be converted into dimensionless Euler-Lagrange dynamical equation described as follows:}
+The obvious benefits of these transformations are that all the inputs own the positive and negative boundedness and hence satisfy the assumption about limited inputs of existing control laws~\cite{Hu2008552,6060930}. The obtained inputs also essentially guarantee the rigorous stability analysis of the proposed sliding mode control in this paper. Based on the novel dimensionless transformations, Eq.~(\ref{eq:dynamics 1}) can be converted into the dimensionless Euler-Lagrange dynamical equation described as follows:}
 \begin{align}
 H(\bm q)\ddot {\bm q}+C(\bm q,\dot{\bm q})\dot{\bm q}+G(\bm q) = \bm\tau+\bm\tau_d,\label{eq:dynamic model}
 \end{align}
@@ -130,22 +130,22 @@ Based on the expression above, one can find that $\dot H(\bm q) - 2C(\bm q,\dot{
 \end{align}
 \begin{myrem}
 
-For the deployment or retrieval mission, the following expression exists,
+For the deployment or retrieval mission, the following expression always exists,
 \begin{align}
 0<\lambda_{min}\le\lambda\le \lambda_{max}\label{eq:lambda}.
 \end{align}
-\textcolor{red}{In reality, once $\lambda = 0$ is satisfied, the mother satellite and subsatellite will collide with each other. Hence the minimum of the dimensionless length $\lambda_{min}$ is introduced to maintain the reasonably safe formation of the satellites, and also guarantees the non-singularity of the dimensionless transformation~(\ref{eq:varcon}) theoretically.} $\lambda_{max}$ stands for the maximum tether length ratio.\par
-Tension in a tether is a positive scalar quantity during the deployment, since zero tension means slack, which is inconsistent with the fundamental assumption that the tether is stiff in the ``rolling ball'' model. $\tau_{tmax}$ denotes the maximum tensile tolerance of the tether, and $\tau_t>\tau_{tmax}$ may leads to the break of tether. Hence, $\tau_{tmin}$ can be a small value to guarantee the stiff tether, and reasonable $\tau_{tmax}$\ prevents fracture of tether.
+\textcolor{red}{In reality, once $\lambda = 0$ is satisfied, the mother satellite and subsatellite will collide with each other. Hence the minimum of the dimensionless length $\lambda_{min}$ is introduced to maintain the reasonably safe formation of the satellites, and also guarantees the non-singularity of the dimensionless transformation~(\ref{eq:dynamics 1}) theoretically.} $\lambda_{max}$ stands for the maximum tether length ratio.\par
+The tension acting on the space tether is a positive scalar during the deployment, since zero tension means slack, which is inconsistent with the fundamental assumption that the tether is stiff in the ``rolling ball'' model. $\tau_{tmax}$ denotes the maximum tensile tolerance of the tether, and $\tau_t>\tau_{tmax}$ may leads to the break of the tether. Hence, $\tau_{tmin}$ can be a small value to guarantee the stiff tether, and reasonable $\tau_{tmax}$\ prevents the fracture of the tether.
 \end{myrem}
 This section have established the deployment dynamics with input limitation and an adaptive saturated sliding mode  control will be presented in the subsequent section.
-\section{Dynamic sliding mode control subject to input limitation}\label{sec:3}
-Before declaring the controller design, some basic precondition is prepared for proceeding derivation.  The left side of Eq.~(\ref{eq:dynamic model}) can be denoted by the linearly parametrization $Y\Theta$, in which $Y=Y(\bm q,\dot {\bm q},\ddot {\bm q})$ consists of known nonlinear functions. $\Theta$ denotes unknown but constant parameters, and particularly it is a constant vector in this dimensionless form. Reconstruct the parametrization $Y\Theta$ in terms of a reference $\dot{\bm q}_r$~\cite{parra2003dynamic}:
+\section{Dynamic sliding mode control subjected to input limitation}\label{sec:3}
+Before declaring the controller design, some basic preconditions are prepared for proceeding derivation.  The left side of Eq.~(\ref{eq:dynamic model}) can be denoted by the linearly parametrization $Y\Theta$, in which $Y=Y(\bm q,\dot {\bm q},\ddot {\bm q})$ consists of known nonlinear functions. $\bm\Theta$ denotes unknown but constant parameters, and particularly it is a constant vector in this dimensionless form. Reconstruct the parametrization $Y\bm\Theta$ in terms of a reference $\dot{\bm q}_r$~\cite{parra2003dynamic}:
 \begin{align}
- Y_r\Theta\equiv H(\bm q)\ddot {\bm q}_r+C(\bm q,\dot {\bm q})\dot {\bm q}_r+G(\bm q)\label{eq:dynamic model 1}
+ Y_r\bm\Theta\equiv H(\bm q)\ddot {\bm q}_r+C(\bm q,\dot {\bm q})\dot {\bm q}_r+G(\bm q)\label{eq:dynamic model 1}
 \end{align}
 where $Y_r = Y_r(\bm q,\dot{\bm q},\dot{\bm q}_r,\ddot{\bm q}_r)$. Based on results mentioned above, the open-loop error dynamics expressed by $\bm S_r$ can be obtained, as follows:
 \begin{align}
-H(\bm q)\dot {\bm S}_r+C(\bm q,\dot{\bm q})\bm S_r=\bm\tau +\bm\tau_d- Y_r\Theta\label{eq:dynamic model 2}
+H(\bm q)\dot {\bm S}_r+C(\bm q,\dot{\bm q})\bm S_r=\bm\tau +\bm\tau_d- Y_r\bm\Theta\label{eq:dynamic model 2}
 \end{align}
 where $\bm S_r$ is defined as
 \begin{align}
@@ -161,7 +161,7 @@ where
 \begin{align}
 \bm{sign}(\bm x) = \left(sign(x_1),sign(x_2),\cdots,sign(x_n)\right)^T
 \end{align}
-for a vector $\bm x=\left(x_1,x_2,,\cdots,x_n\right)^T$. $\alpha$ and $\gamma$ are controller parameters which will be discussed in the controller design. Define the tracking error as $\Delta \bm q=\bm q-\bm q_d$, in which $\bm q_d$ is the desired trajectory with $\bm q_d(t)\in C^2$. However, the PID controller~(\ref{eq:pid controller}) can not be directly applied to the system~(\ref{eq:dynamic model 2}) with the input limitation, and in the subsequent section, we will utilize the saturated sliding mode technique to modify the PID controller~(\ref{eq:pid controller}) for the system~(\ref{eq:dynamic model 2}).} For deriving the proposed control scheme, some properties should be given out in advance.
+for a vector $\bm x=\left(x_1,x_2,,\cdots,x_n\right)^T$. $\alpha$ and $\gamma$ are controller parameters which will be discussed in the controller design. Define the tracking error as $\Delta \bm q=\bm q-\bm q_d$, in which $\bm q_d$ is the desired trajectory with $\bm q_d(t)\in C^2$. However, the PID controller~(\ref{eq:pid controller}) can not be directly applied to the system~(\ref{eq:dynamic model 2}) with the input limitation, and in the subsequent section, we will utilize the saturated sliding mode technique to modify the controller~(\ref{eq:pid controller}) for the system~(\ref{eq:dynamic model 2}).} For deriving the proposed control scheme, some properties should be given out in advance.
 \begin{mypro}\cite{parra2003dynamic}\label{pro:1}
 \textcolor{red}{Positive scalars $\Xi_i(i = 0,\ldots,6)$ always exist such that
 \begin{align}
@@ -174,12 +174,12 @@ for a vector $\bm x=\left(x_1,x_2,,\cdots,x_n\right)^T$. $\alpha$ and $\gamma$ a
 \Vert \ddot {\bm q}_r\Vert & \le \Xi_6+\alpha\Vert\Delta \dot {\bm q}\Vert\\
 \end{split}
 \end{align}
-where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively. Furthermore, one can have $Y_r\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta \bm q,\Delta \dot {\bm q},\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi_0$, in which $\varphi_0$ is a positive scalar determined according to the system state.}
+where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum eigenvalues of matrix, respectively. Furthermore, one can have $Y_r\bm\Theta\le \eta(t)$, in which $\eta(t)=f(\Delta \bm q,\Delta \dot {\bm q},\sigma,\Xi_i,t)$ is a state-dependent function, thus $Y_r\bm\Theta$ is usually thought to be a bounded function such that $\vert\eta\vert\le\varphi_0$, in which $\varphi_0$ is a positive scalar determined according to the system states.}
 \end{mypro}
 
 \begin{myas}
 \textcolor{red}{
-In the low orbit altitude, the external disturbance $\bm\tau_d$ contains gravity gradient torque, aerodynamic interference and solar radiation pressure torque. According to existing studies, the values of the solar radiation pressure and the aerodynamic torque are about $1\times10^{-5}$ Nm, and meanwhile the gradient torque is in the range of $1\times10^{-5}$ Nm. Typically, the space perturbation can be regarded as the periodic function in this paper, and the period equals the orbital period $5000$ s~\cite{Inamori2015192}. Hence, the external disturbance can be described by the following expression
+In the low orbit altitude, the external disturbance $\bm\tau_d$ contains gravity gradient torque, aerodynamic interference and solar radiation pressure torque. According to existing studies, the values of the solar radiation pressure and the aerodynamic torque are about $1\times10^{-5}$ Nm, and meanwhile the gradient torque is in the range of $1\times10^{-5}$ Nm. The space perturbation can be specifically regarded as the periodic function in this paper, and the period equals the orbital period $5000$ s~\cite{Inamori2015192}. Hence, the external disturbance can be described by the following expression
 \begin{align}
 \bm\tau_d=\left(0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000)\right)^T.
 \end{align}
@@ -187,12 +187,12 @@ Therefore, the bounded external disturbance satisfy
 \begin{align}
 \Vert\bm\tau_d\Vert\le\varphi_1<\infty,
 \end{align}
-where $\varphi_1$ is a positive scalar.
+where $\varphi_1$ can be selected as a positive scalar $\varphi_1=1$.
 }
 \end{myas}
-\subsection{Saturated sliding mode control subject to input limitation}
-The process above can frame a conventional dynamic sliding PID control scheme, which can regulate the dynamics of n-link robotic manipulator if the dimension in the derivation above is extended~\cite{parra2003dynamic}. However, it is not possible to regulate the dynamics of the deployment as desired theoretically, because the input $\tau$ in the PID controller is not confined to the characteristics of the tension. To cope with the issue about the bounded input, we develop the dynamic sliding mode control with the experience of saturated manifold, which is also a popular technique in the control of Lagrangian system.\par
-Before giving out main results, some routine lemmas emerge in advance to support the derivation.
+\subsection{Saturated sliding mode control subjected to input limitation}
+The process above can frame a conventional dynamic sliding PID control scheme, which can regulate the dynamics of n-link robotic manipulator if the dimension in the derivation above is extended~\cite{parra2003dynamic}. However, it is not possible to regulate the dynamics of the deployment as desired theoretically, because the input $\tau$ in the PID controller is not confined to the characteristics of the tension. To cope with the issue about bounded inputs, we develop the dynamic sliding mode control with the experience of the saturated manifold, which is also a popular technique in the control of Lagrangian system.\par
+Before giving out main results, some routine lemmas emerge in advance to support proceeding derivations.
 \begin{mylem}\label{lemma:1}
 Consider a quasi-saturated function as follows:
 \begin{align}
@@ -202,7 +202,7 @@ sign(x)&\vert x\vert\ge\pi/2\\
 sin(x)&\vert x\vert<\pi/2
 \end{cases},
 \end{align}
-and it's notable that the function above is saturated and owns an important property: $\vert Sine(x)\vert\le\vert x\vert$, $\forall x$. The geometric illustration is shown in Figure~\ref{fig:2}, from which an interesting property can be found by sliding the curve $y=Sine(x)$ along the axis $x=0$ in the range $[-\Delta h,\Delta h]$, and once the function $y=Sine(x)+\Delta h$ settles, one can chose the function $y = x+arcsin(\Delta h)$ such that
+and it's notable that the function above is saturated and owns an important property: $\vert Sine(x)\vert\le\vert x\vert$, $\forall x$. The geometric illustration is shown in Figure~\ref{fig:2}, from which an interesting property can be found by sliding the curve $y=Sine(x)$ along the axis $x=0$ in the range $[-\Delta h,\Delta h]$ with $\vert \Delta h \vert< 1$, and once the function $y=Sine(x)+\Delta h$ settles, one can chose the function $y = x+arcsin(\Delta h)$ such that
 \begin{align}
 &\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert\label{eq:lem11}\\
 &sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)), \forall x, \vert\Delta h\vert<1\label{eq:lem12}.
@@ -237,7 +237,7 @@ and similarly the following equation is reasonable:
 sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)),Sine(x)+\Delta h\le0.
 \end{align}
 \end{proof}
-\begin{myrem}\textcolor{red}{Moreover, we think that a quantity $y$ or vector $\bm y$ is saturated iff it is produced directly by the saturated function $y=Sine(x)$ or $\bm y=\bm{Sine(x)}$. Otherwise, the bounded quantity is different from the saturated one since it does not own the standard formulation like $y=Sine(x)$, i.e., a quantity can just be said a bounded quantity if its boundary is $[a,b]$ with $a\neq -1$ or $b\neq 1$.}
+\begin{myrem}\textcolor{red}{Moreover, we think that a quantity $y$ or vector $\bm y$ is saturated iff it is produced directly by the saturated function $y=Sine(x)$ or $\bm y=\bm{Sine(x)}$. Otherwise, the bounded quantity is different from the saturated one since it does not own the standard formulation like $y=Sine(x)$, i.e., a quantity can just be referred to as a bounded quantity if its boundary is $[a,b]$ with $a\neq -1$ or $b\neq 1$.}
 \end{myrem}
 \begin{figure}
 \centering
@@ -246,7 +246,7 @@ sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)),Sine(x)+\Delta h\le0.
 \label{fig:2}
 \end{figure}
 \begin{mylem}\cite{Hu2008552}\label{lemma:2}
-Consider a limited function owning the subsequent property:
+Consider a bounded function owning the subsequent property:
 \begin{align}
 g(y) &= R(y)y\in[y_{min},y_{max}]\\
 R(y)&=\begin{cases}
@@ -261,7 +261,7 @@ where $y_{min}$ and $y_{max}$ stand for the minimum and maximum values of $g(y)$
 \end{align}
 \end{mylem}
 \begin{myrem}
-As we know, \textcolor{red}{the tension, in-plane and out-of-plane thruster force are all limited during deployment mission, and we describe inputs by using the matrix and vector to predigest the following illation.}
+As we know, \textcolor{red}{the tension, in-plane and out-of-plane thruster force are all limited during the deployment mission, and we describe these inputs by using the matrix and vector to predigest the following illation.}
 \begin{align}
 \bm{g}(\tau) &= \left(g(\hat\tau_t),g(\hat\tau_\theta),g(\hat\tau_\phi)\right)^T\\
 R_M(\tau) &= \begin{bmatrix}R(\hat\tau_t)&0&0\\0&R(\hat\tau_\theta)&0\\0&0&R(\hat\tau_\phi)\end{bmatrix}.
@@ -271,9 +271,9 @@ and in order to design the saturated sliding mode  control for the dynamics of t
 \bm{Sine}(\bm x)=\begin{pmatrix}Sine(x_1),Sine(x_2),\cdots,Sine(x_n)\end{pmatrix}^T.
 \end{align}
 \end{myrem}
-The lemmas above introduce some properties about saturated functions, with which the dynamic sliding mode control subject to input limitation for Lagrangian system~(\ref{eq:dynamic model}) can be designed by using the subsequent theorem.
+The lemmas above introduce some properties about saturated functions, with which the dynamic sliding mode control subjected to input limitation for Lagrangian system~(\ref{eq:dynamic model}) can be designed by using the subsequent theorem.
 \begin{mythm}\label{thm:1}(Saturated sliding mode control)
-Considering a nominal Lagrangian system~(\ref{eq:dynamic model}) expressing the dynamics of the deployment of the TSS, one can construct a saturated sliding mode control subject to input limitation, as follows:
+Considering a nominal Lagrangian system~(\ref{eq:dynamic model}) expressing the dynamics of the deployment of the TSS, one can construct a saturated sliding mode control law subjected to the input limitation, as follows:
 \begin{align}
 \bm\tau = -\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1})),\label{eq:slider control}
 \end{align}
@@ -297,10 +297,10 @@ e^{K_{21}}&e^{K_{22}}&e^{K_{23}}\\
 e^{K_{31}}&e^{K_{32}}&e^{K_{33}}
 \end{bmatrix}.
 \end{align}
-\textcolor{red}{$\varphi$ is the boundedness of the lumped uncertainty. $\gamma$ is designed as a time-varying positive scalar and $\varphi>1$ is the design parameter, so that the deployment dynamics can be regulated as desired.}
+\textcolor{red}{$\varphi$ is the boundedness of the lumped uncertainty. $\gamma$ is designed as a time-varying positive scalar and $\delta>1$ is the design parameter, so that the deployment dynamics can be regulated as desired.}
 \end{mythm}
 \begin{proof}
-Consider dynamic coordinates change $\bm S_{r2}$ with the regular error variable but not the $Sine$ form:
+Consider the dynamic coordinate change $\bm S_{r2}$ with regular error vectors $\Delta \bm q$ and $\Delta\dot{\bm q}$:
 \begin{align}
 \begin{split}
 \bm S_{r2} &= \bm S_{q2}+\bm{arcsin}(\gamma\int^t_{t_0}\bm S_{q1}(\varsigma) d\varsigma)\\
@@ -311,7 +311,7 @@ where $\bm y=\bm{arcsin}(\bm x)$ is the vector function with
 \begin{align}
 \bm{arcsin}(\bm x) = \left(arcsin(x_1),arcsin(x_2),\cdots,arcsin(x_n)\right)^T
 \end{align}
-for a vector $\bm x=\left(x_1,x_2,\cdot,x_n\right)^T$. It is obvious that $\bm S_{q_1}$ is bounded, or exactly saturated, hence $\bm S_{r_1}$ is also bounded if the dynamics can be controlled as desired. \textcolor{red}{In addition, for guaranteeing that $\bm x=\gamma\int^t_{t_0}\bm S_{q1}(\varsigma) d\varsigma$ always falls in the field of definition of $\bm y=arcsin(\bm x)$, $\gamma$ can be designed as a time-varying parameter
+for a vector $\bm x=\left(x_1,x_2,\cdots,x_n\right)^T$. It is obvious that $\bm S_{q_1}$ is bounded, or exactly saturated, hence $\bm S_{r_1}$ is also bounded if the dynamics can be controlled as desired. \textcolor{red}{In addition, for guaranteeing that $\bm x=\gamma\int^t_{t_0}\bm S_{q1}(\varsigma) d\varsigma$ always falls in the field of definition of $\bm y=\bm{arcsin}(\bm x)$, $\gamma$ can be designed as a time-varying parameter
     \begin{align}
     \gamma=\begin{cases}
     \gamma_0&\Vert\int^t_{t_0}\bm S_{q1}(\varsigma) d\varsigma\Vert\le 1\\
@@ -324,27 +324,27 @@ According to Lemma~\ref{lemma:1}, it is apparent that $\bm S_{r2}$ and $\bm S_{r
 &\bm S_{r2}^T \bm{sign}(\bm S_{r2}) \ge  \bm S_{r1}^T \bm{sign}(\bm S_{r1})\\
 &\bm{sign}(\bm S_{r2})=\bm{sign}(\bm S_{r1}),
 \end{align}
-Introducing the limited input~(\ref{eq:slider control}) and replacing the dynamic coordinates change $\bm S_r$ in Eq.~(\ref{eq:dynamic model 2}) with $\bm S_{r2}$ holds results in the following expression:
+Introducing the limited input~(\ref{eq:slider control}) and replacing the dynamic coordinate change $\bm S_r$ in Eq.~(\ref{eq:dynamic model 2}) with $\bm S_{r2}$ holds results in the following expression:
 \begin{align}
-H(q)\dot {\bm S}_{r2} = -\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))-C(q,\dot q)\bm S_{r2}-Y_{r2}\Theta.
+H(q)\dot {\bm S}_{r2} = -\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm\tau_d-C(q,\dot q)\bm S_{r2}-Y_{r2}\bm\Theta.
 \end{align}
-Similar to Properties~\ref{pro:1}, one can find a positive scalar $\varphi_2$ such that $\Vert Y_{r2}\Theta\Vert\le\varphi_2$, and moreover the boundedness of the lumped uncertainty $\varphi$ satisfies $\varphi>\varphi_1+\varphi_2$.
+Similar to Properties~\ref{pro:1}, one can find a positive scalar $\varphi_2$ such that $\Vert Y_{r2}\bm\Theta\Vert\le\varphi_2$, and moreover the boundedness of the lumped uncertainty $\varphi$ satisfies $\varphi>\varphi_1+\varphi_2$.
 
 Select the Lyapunov function candidate
 \begin{align}
 V=\frac{1}{2}\bm S_{r2}^TH(q)\bm S_{r2}+\frac{1}{2}v^2,
 \end{align}
-where $v=F(t)e^{K_1^{-1}F^{-1}(t)}$ and $\frac{1}{2}v^2$ is an auxiliary Lyapunov function with adaptive terms. Differentiating the Lyapunov function above
+where $v=F(t)e^{K_1^{-1}F^{-1}(t)}$ and $\frac{1}{2}v^2$ is an auxiliary Lyapunov function with adaptive terms. Differentiating the Lyapunov function above gives rise to
 \begin{align}
 \begin{split}
 \dot V &= \bm S_{r2}^TH(q)\dot {\bm S}_{r2}+\frac{1}{2}\bm S_{r2}^T\dot H(q)\bm S_{r2}+v\dot v\\
-&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TC(q,\dot q)\bm S_{r2}+\frac{1}{2}\bm S_{r2}^T\dot H(q)\bm S_{r2}-\bm S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{r2}\Theta+\frac{1}{2}\bm S_{r2}^T(\dot H(q)-2C(q,\dot q))\bm S_{r2}+v\dot v\\
-&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{r2}\Theta+v\dot v\\
-&= -\bm S_{r2}^TR_M(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))\delta\varphi F(t) \bm{sign}(\bm S_{r1})+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{\bm r2}\Theta+v\dot v.\label{eq:V1_1}
+&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TC(q,\dot q)\bm S_{r2}+\frac{1}{2}\bm S_{r2}^T\dot H(q)\bm S_{r2}-\bm S_{r2}^TY_{r2}\bm\Theta+v\dot v\\
+&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{r2}\bm\Theta+\frac{1}{2}\bm S_{r2}^T(\dot H(q)-2C(q,\dot q))\bm S_{r2}+v\dot v\\
+&= -\bm S_{r2}^T\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{r2}\bm\Theta+v\dot v\\
+&= -\bm S_{r2}^TR_M(\delta\varphi F(t) \bm{sign}(\bm S_{r1}))\delta\varphi F(t) \bm{sign}(\bm S_{r1})+\bm S_{r2}^T\bm\tau_d-\bm S_{r2}^TY_{\bm r2}\bm\Theta+v\dot v.\label{eq:V1_1}
 \end{split}
 \end{align}
-\textcolor{red}{Since the command $ -\delta\varphi F(t) \bm S_{r1}$ is bounded, one can select reasonably small positive scalars $c_1$, $c_2$ and $c_3$ which satisfy $0<c_1\le R(\hat\tau_t)<1$, $0<c_2\le R(\hat\tau_\theta)<1$ and $0<c_3\le R(\hat\tau_\phi)<1$, and obtain a diagonal matrix as follows:}
+\textcolor{red}{Since the command input $ -\delta\varphi F(t) \bm {sign}(\bm{S}_{r1})$ is bounded, one can select reasonably small positive scalars $c_1$, $c_2$ and $c_3$ which satisfy $0<c_1\le R(\hat\tau_t)<1$, $0<c_2\le R(\hat\tau_\theta)<1$ and $0<c_3\le R(\hat\tau_\phi)<1$, and obtain the diagonal matrix $K_1$ as follows:}
 \begin{align}
 K_1 = \begin{bmatrix}c_1&0&0\\0&c_2&0\\0&0&c_3\end{bmatrix}.\label{eq:saturated ratio}
 \end{align}
@@ -361,7 +361,7 @@ considering $\bm{sign}(\bm S_{r1})=\bm{sign}(\bm S_{r2})$ and $K_1$, we can proc
 \end{split}
 \end{align}}
 \textcolor{red}{
-where a large enough $\delta>1$ can be selected to satisfy $\dot V \le 0$. According to the description of Barbalat¡¯s lemmas, we can conclude  that $\bm S_{r2}$ asymptotically converges to origin. Also, the finite convergent time of desired sliding surface can be calculated by referring to~\cite{Ma201667}.}\par
+where a large enough $\delta>1$ can be selected to satisfy $\dot V \le 0$. According to the description of Barbalat's lemmas, we can conclude  that $\bm S_{r2}$ asymptotically converges to the origin. Also, the finite reaching time can be calculated by referring to~\cite{Ma201667}.}\par
 \textcolor{red}{Utilizing $\bm S_{r2}=0$ leads to the equation
 \begin{align}
 \bm S_{q2}=-\bm{arcsin}(\gamma\int^t_{t_0}\bm S_{q1}(\varsigma) d\varsigma),\label{eq:eqSq2}
@@ -370,7 +370,7 @@ and for employing Lyapunov second method to analyse the stabilities of $\bm S_{q
 \begin{align}
 V_1 = \frac{1}{2}\bm S_{q2}^T\bm S_{q_2},
 \end{align}
-the derivative of which gives rise to
+and the derivative of which gives rise to
 \begin{align}
 \begin{split}
 \dot V_1 &= \bm S_{q2}^T\dot {\bm S}_{q_2}\\
@@ -392,10 +392,10 @@ We proceed to select the Lyapunov function candidate $V_2=\frac{1}{2}\Delta \bm 
 if and only if $\Delta \bm q = 0$, namely, $\Delta \dot {\bm q} = 0$, one has $\dot V_2=0$. Hence asymptotically convergence of $\Delta \bm q$ has been explained, namely, $\Delta \bm q\rightarrow 0$ as $t\rightarrow \infty$. To conclude, the error state $\Delta \bm q$ of the system~(\ref{eq:dynamics 1}) asymptotically converges to the origin with the limited input~(\ref{eq:slider control})}. This completes the proof.
 \end{proof}
 \begin{myrem}
-\textcolor{red}{For the adaptive sliding mode control with input limitation, the adaptive update rate $\frac{d}{dt}F(t)$ always helps to remove the side-effect of the input limitation during the stability analysis by using Lyapunov second method, and moreover, the actual examples of $F(t)$ are unhelpful to the theoretical derivation and the controller design~\cite{Hu2008552,6060930}. This is because we can search the actual value of $F(t)$  by the way of state updating from the initial condition $F(0)=0$, for instance, in our simulations, we applied ode45 technique to update states of the overall system including this adaptive update rate.}
+\textcolor{red}{For the adaptive sliding mode control with input limitation, the adaptive update rate $\frac{d}{dt}F(t)$ always helps to remove the side-effect of the input limitation during the stability analysis by using Lyapunov second method, and moreover, the actual examples of $F(t)$ are unhelpful to the theoretical derivation and the controller design~\cite{Hu2008552,6060930}. This is because we can search the actual value of $F(t)$  by the way of state updating from the initial condition $F(0)=0$, for instance, in our simulations, we apply Ode45 technique to update states of the overall system including this adaptive update rate.}
 \end{myrem}
-\subsection{Quasi-saturated terminal sliding mode control subject to input limitation}
-The design methodology of the saturated sliding mode control has been exhibited in last subsection, and the entire strict proof ensures that the dynamics of the deployment of the tethered satellite can be regulated with the limited tension control. Essentially, the method mentioned above is able to perform a limited sliding mode controller, since the order of the integrated error is one. If the order of the integrated error varies to become a fraction, the value of which is less than one, one establishes the terminal attractor like
+\subsection{Quasi-saturated terminal sliding mode control subjected to input limitation}
+The design methodology of the saturated sliding mode control has been exhibited in last subsection, and the entire strict proof ensures that the deployment dynamics of the TSS can be regulated with the limited tension control. If the order of the integrated error becomes a fraction, the value of which is less than one, we obtain the terminal attractor like
 \begin{align}
 \dot Z = Z^{p/q},
 \end{align}
@@ -408,7 +408,7 @@ The design methodology of the saturated sliding mode control has been exhibited 
 For Eq.~(\ref{eq:dynamic model}), the length rate is thought to be bounded during the deployment, namely, $0<\epsilon\le\dot \lambda<\infty$, such that $\Delta \dot \lambda$ is bounded, either.
 \end{myas}
 \begin{mythm}\label{thm:2}(Quasi-saturated terminal sliding mode control)
-Considering the dynamics of the deployment as described in Eq.~(\ref{eq:dynamic model}) with limited tension control, the quasi-saturated terminal sliding mode control input can be designed as follow:
+Considering the deployment dynamics of the TSS as described in Eq.~(\ref{eq:dynamic model}) with limited tension control, the quasi-saturated terminal sliding mode control input can be designed as follow:
 \begin{align}
 \tau = -\bm{g}(\delta\varphi F(t) \bm{sign}(\bm S_{r3}))
 \end{align}
@@ -440,8 +440,8 @@ where
 so that the finite convergence of the system~(\ref{eq:Sr4}) can be ensured by using terminal sliding mode theory. $\varphi$ is the boundedness of the lumped uncertainty, and can be obtained by referring to Theorem~\ref{thm:1}.
 \end{myrem}
 \section{Simulation studies}\label{sec:4}
-This section presents the simulations of the regulation of the deployment dynamics with saturated sliding mode control, saturated terminal sliding mode control and quasi-saturated terminal sliding mode control, and for clarity, these controllers are abbreviated as S-SMC, ST-SMC and QSF-SMC, respectively. The parameters of these controllers can be selected as follows: $\delta=1.1$, $\varphi= 1\times 10^{-3}$, $\alpha = 0.8$, $\gamma = 0.1$ and $\hat\alpha=0.6$.\par
-Besides the design parameter determined, the simulation initial and desired condition can be described as follows. The circular orbital altitude is selected around 260 $km$ approximately, and the orbital angular velocity is about $1.17\times 10^{-3}$ $rad/s$. At the initial ejection of the subsatellite, the true anomaly is assumed to be 0 $rad$. Meanwhile, the initial deployment velocity is about 3 $m/s$, and the subsatellite is going to be deployed at 3.5 $km$ vertically. \textcolor{red}{The pitch and roll dynamics is varying in a small range, and hence, without loss of generality, the numerical initial condition gives rise to: $\theta_0 = 0.1$, $\phi_0 = 0.1$, $\lambda_0 = 0.02$; the desired condition is set to be $\theta_d = 0$, $\phi_d = 0$ and $\lambda_d = 1$, accordingly, $\lambda(t_0)\rightarrow\lambda_d$, $t\rightarrow\infty$ with $\theta(t_0)\rightarrow\theta_d$, $\phi(t_0)\rightarrow\phi_d$, $t\rightarrow\infty$. Hence the dimensionless tether length is in the range of $[0.02,1]$.}\par
+This section presents the simulations of the regulation of the deployment dynamics with saturated sliding mode control, saturated terminal sliding mode control and quasi-saturated terminal sliding mode control laws, and for clarity, these controllers are abbreviated as S-SMC, ST-SMC and QSF-SMC, respectively. The parameters of these controllers can be selected as follows: $\delta=1.1$, $\varphi= 4$, $\varphi_1 = 1$, $\varphi_2= 2$, $\alpha = 0.8$ and $\hat\alpha=0.6$.\par
+Besides the design parameter determined, the simulation initial and desired conditions can be described as follows. The circular orbital altitude is selected around 260 $km$ approximately, and the orbital angular velocity is about $1.17\times 10^{-3}$ $rad/s$. At the initial ejection of the subsatellite, the true anomaly is assumed to be 0 $rad$. Meanwhile, the initial deployment velocity is about 3 $m/s$, and the subsatellite is going to be deployed at 3.5 $km$ vertically. \textcolor{red}{The pitch and roll dynamics is varying in a small range, and hence, without loss of generality, the numerical initial condition gives rise to: $\theta_0 = 0.1$, $\phi_0 = 0.1$, $\lambda_0 = 0.02$; the desired condition is set to be $\theta_d = 0$, $\phi_d = 0$ and $\lambda_d = 1$, accordingly, $\lambda(t_0)\rightarrow\lambda_d$, $t\rightarrow\infty$ with $\theta(t_0)\rightarrow\theta_d$, $\phi(t_0)\rightarrow\phi_d$, $t\rightarrow\infty$. Hence the dimensionless tether length is in the range of $[0.02,1]$.}\par
 During the deployment, the dimensionless thruster forces which manage the in-plane angle and the out-of-plane angle are assumed to be saturated with $\vert\hat\tau_{\theta}\vert\le5 $ and $\vert\hat\tau_{\phi}\vert\le 5$. Also, the dimensionless tension $\hat\tau_t$ is limited, and from Eq.~(\ref{eq:varcon}), one can obtain
 \begin{align}
 \begin{split}
@@ -463,8 +463,8 @@ Hence, the limited dimensionless tension gives rise to
 -\tau_{tmax}/(\bar{m}\Omega^2L)+\lambda_{max}\le\hat\tau_{tmin}\le\hat\tau_t\le\hat\tau_{tmax}\le-\tau_{tmin}/(\bar{m}\Omega^2L)+\lambda_{min}.
 \end{align}
 Based on the expression above, one can obtain $\bar{m}\Omega^2L\approx 4.79\times 10^{-3}$, and suitable boundary values $\hat\tau_{tmin}$ and $\hat\tau_{tmax}$ can be chosen to make the dimensionless tension $\hat\tau_t$ fall in the region $[-3,0.01]$.\par
-At this point, the simulations of the deployment dynamics of the TSS can be carried on. \textcolor{red}{We firstly conduct the simulation about the pure deployment dynamics without any uncertainties to verify the effectiveness of the proposed control laws, and the results are illustrated in Figure~\ref{fig:3} to~\ref{fig:6}. Figure~\ref{fig:3} shows the dynamics of the length in different control laws, and it is obvious that all the methods can realize the deployment in aspect of the tether length.} ST-SMC and QST-SMC complete the deployment at about 4 $rad$. \textcolor{red}{As shown in Figure~\ref{fig:4}, S-SMC and QST-SMC have bigger length rate than ST-SMC before 1.2 $rad$, indicating the curves of the tether length climb more rapidly at the beginning.} However, the length rate of ST-SMC doesn't decline dramatically like the other two methods after 1.2 $rad$. This slowly varying length rate yields a smooth trajectory of the deployment shown in Figure~\ref{fig:3}, and meanwhile the length rate converges to origin earlier than S-SMC and QST-SMC.\par
-\textcolor{red}{The in-plane and out-of-plane angles reflect the swing dynamics of the tether during the deployment, the details of which are drawn in Figue~\ref{fig:5}.} For ST-SMC, the in-plane dynamics is regulated to vertical status at 4 $rad$, and the in-plane angle converges to the origin in the subsequent time. \textcolor{red}{Hence the coalition of the length and the swing dynamics implies that the whole deployment mission is completed at about 4 $rad$ by utilizing ST-SMC.} S-SMC makes the tether swing to desired position at a low convergent speed near the vertical direction during 2 $rad$ to 4 $rad$.\par
+At this point, the simulations of the deployment dynamics of the TSS can be carried on. \textcolor{red}{We firstly conduct the simulation about the pure deployment dynamics without any uncertainties to verify the effectiveness of the proposed control laws, and the results are illustrated in Figure~\ref{fig:3} to~\ref{fig:6}. Figure~\ref{fig:3} shows the dynamics of the length in different control laws, and it is obvious that all the methods can realize the deployment in aspect of the tether length.} ST-SMC and QST-SMC complete the deployment at about 4 $rad$. \textcolor{red}{As shown in Figure~\ref{fig:4}, S-SMC and QST-SMC have bigger length rate than ST-SMC before 1.2 $rad$, indicating the curves of the tether length climb more rapidly at the beginning.} However, the length rate of ST-SMC doesn't decline dramatically like the other two methods after 1.2 $rad$. This slowly varying length rate yields a smooth trajectory of the deployment shown in Figure~\ref{fig:3}, and meanwhile the length rate converges to the origin earlier than S-SMC and QST-SMC.\par
+\textcolor{red}{The in-plane and out-of-plane angles reflect the swing dynamics of the tether during the deployment, the details of which are drawn in Figue~\ref{fig:5}.} For ST-SMC, the in-plane dynamics is regulated to vertical status at 4 $rad$, and the in-plane angle converges to the origin in the subsequent time. \textcolor{red}{Hence the coalition of the length and the swing dynamics implies that the whole deployment mission is completed at about 4 $rad$ by utilizing ST-SMC.} S-SMC makes the tether swing to the desired position at a low convergent speed near the vertical direction during 2 $rad$ to 4 $rad$.\par
 The inputs in S-SMC for dynamic model~(\ref{eq:dynamic model}) is exhibited in Figure~\ref{fig:6}, in which it is obvious that the limited situations occur frequently. Thanks to the scalable dimensionless transformation determined conservatively, the tension exerted on the tether falls in the reasonable region.\par
 \begin{figure}
 \centering
@@ -490,7 +490,7 @@ The inputs in S-SMC for dynamic model~(\ref{eq:dynamic model}) is exhibited in F
 \caption{Tension}
 \label{fig:6}
 \end{figure}
-\textcolor{red}{So far, the proposed control laws have been verified in the undisturbed environment. However, space perturbations and parametric uncertainties usually occur during the deployment of the tethered satellite system in engineering application. For checking the robustness of the proposed control laws, based on the dynamics~(\ref{eq:dynamics 1}), we have the following assumptions about uncertainties and disturbances:
+\textcolor{red}{So far, the proposed control laws have been verified in the undisturbed environment. However, space perturbations and parametric uncertainties usually occur during the deployment of the TSS in engineering application. For checking the robustness of the proposed control laws, based on the dynamics~(\ref{eq:dynamics 1}), we have the following assumptions about uncertainties and disturbances:
 \begin{align}\begin{split}
 \frac{1}{2}&\le\frac{\hat{\bar m}}{\bar m}\le 2\\
 \frac{1}{2}&\le\frac{\hat L}{L}\le 2\\
@@ -533,7 +533,7 @@ The simulation results of the deployment dynamics subjected to uncertainties are
 \label{fig:10}
 \end{figure}
 \section{Conclusion}\label{sec:5}
-In this paper, the error dynamics of the deployment of the TSS provides the adaptive sliding mode control with a simplified solution for the reaching phase, which ignores the nonlinear nature of the model, and the new dimensionless transformation subject to the limited input guarantees the effectiveness of the auxiliary Lyapunov function with adaptive terms. The simulation results show that the proposed methods adjust the length of the tether and the swinging dynamics as desired, although there exists the input limitation during the deployment. According to the results mentioned above, combining error dynamics design approach, adaptive approach and nonlinear sliding mode surface design technology may provide a further insight into regulation of the dynamics of the deployment of the tethered satellite system.
+In this paper, the error dynamics of the deployment of the TSS provides the adaptive sliding mode control with a simplified solution for the reaching phase, which ignores the nonlinear nature of the model, and the new dimensionless transformation subjected to the limited input guarantees the effectiveness of the auxiliary Lyapunov function with adaptive terms. The simulation results show that the proposed methods adjust the length of the tether and the swing dynamics as desired, although there exists the input limitation during the deployment. Also, the robustness to parametric uncertainties and external disturbances is verified reasonably. According to the results mentioned above, combining error dynamics design approach, adaptive approach and nonlinear sliding mode surface design technology may provide a further insight into regulation of the deployment dynamics of the TSS.
 \section{Acknowledgment}
 This work is partially supported by the National Natural Science Foundation of China (No. 61104112, 61503101).
 \section{References}
