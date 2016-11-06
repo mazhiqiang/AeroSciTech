@@ -83,7 +83,7 @@ Based on the assumption mentioned above and Lagrangian mechanics theory, we can 
 &\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\begin{bmatrix}(\theta'+\Omega)^2+3\bar m \Omega\cos^2\theta\end{bmatrix}=\tau_\phi+\tau_{\phi d},\label{eq:dynamics 1}
 \end{split}
 \end{align}
-\textcolor{red}{where, $m = m_1+m_2$ stands for the total mass of the system, $m_1$ and $m_2$ of which denote the mass of the mother satellite and of the subsatellite, respectively. \textcolor{red}{$(\cdot)'$ represents a first derivative with respect to time, and $l$ means the tether length connecting the satellites. $\theta$ and $\phi$ depict the roll and pitch dynamics of the TSS. For clarity, $m_1m_2/m$ is rewritten as $\bar m$. $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster force and the out-of-plane thruster force, respectively, and $\tau_{t d}$, $\tau_{\theta d}$ and $\tau_{\phi d}$ stand for the bounded external disturbances correspondingly.} Typically, the dimensionless transformations simplify issues for researchers to design the deployment scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
+\textcolor{red}{where, $m = m_1+m_2$ stands for the total mass of the system, $m_1$ and $m_2$ of which denote the mass of the mother satellite and of the subsatellite, respectively. \textcolor{red}{$(\cdot)'$ represents a first derivative with respect to time, and $l$ means the tether length connecting the satellites. $\theta$ and $\phi$ depict the roll and pitch dynamics of the TSS. For clarity, $m_1m_2/m$ is rewritten as $\bar m$. $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster force and the out-of-plane thruster force, respectively. $\tau_{t d}$, $\tau_{\theta d}$ and $\tau_{\phi d}$ stand for the bounded external disturbances correspondingly.} Typically, the dimensionless transformations simplify issues for researchers to design the deployment scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
 \begin{align}
 \begin{split}
 &\lambda=l/L\\
@@ -139,7 +139,7 @@ For the deployment mission, the following expression always exists,
 \textcolor{red}{In reality, once $\lambda = 0$ is satisfied, the mother satellite and subsatellite will collide with each other, which is meaningless for the deployment of the TSS. Hence the minimum of the dimensionless length $\lambda_{min}$ is introduced to maintain the reasonably safe formation of the satellites, and also guarantees the non-singularity of the dimensionless transformation~(\ref{eq:dynamics 1}) theoretically.} $\lambda_{max}$ stands for the maximum tether length ratio.\par
 The tension acting on the space tether is a positive scalar during the deployment, since zero tension means slack, which is inconsistent with the fundamental assumption that the tether is stiff in the ``rolling ball'' model. $\tau_{tmax}$ denotes the maximum tensile tolerance of the tether, and $\tau_t>\tau_{tmax}$ may lead to the break of the tether. Hence, $\tau_{tmin}$ can be a small value to guarantee the stiff tether, and reasonable $\tau_{tmax}$\ prevents the fracture of the tether.
 \end{myrem}
-This section have established the deployment dynamics with the input limitation and an adaptive saturated sliding mode control law will be presented in the subsequent section.
+This section has established the deployment dynamics with the input limitation and an adaptive saturated sliding mode control law will be presented in the subsequent section.
 \section{Dynamic sliding mode control law subjected to input limitation}\label{sec:3}
 Before declaring the control law design, some basic preconditions are prepared for proceeding derivations.  The left side of Eq.~(\ref{eq:dynamic model}) can be denoted by the linearly parametrization $Y\Theta$, in which $Y=Y(\bm q,\dot {\bm q},\ddot {\bm q})$ consists of known nonlinear functions. $\bm\Theta$ denotes unknown but constant parameters, and particularly it is a constant vector in this dimensionless form. Reconstruct the parametrization $Y\bm\Theta$ in terms of a reference $\dot{\bm q}_r$~\cite{parra2003dynamic}:
 \begin{align}
@@ -153,7 +153,7 @@ where $\bm S_r$ is defined as
 \begin{align}
 \bm S_r=\dot {\bm q}-\dot {\bm q}_r.\label{eq:Sr1}
 \end{align}
-\textcolor{red}{For the system~(\ref{eq:dynamic model 2}) with ignoring the input limitation, the author in \cite{parra2003dynamic} has designed a nonlinear dynamic sliding PID controller with the zero initial condition:
+\textcolor{red}{For the system~(\ref{eq:dynamic model 2}) with the input limitation ignored, the author in \cite{parra2003dynamic} has designed a nonlinear dynamic sliding PID controller with the zero initial condition:
 \begin{align}\begin{split}
 \dot {\bm q}_r&=\dot{\bm q}_d-\alpha\Delta\bm q-\gamma\bm\sigma\\
 \dot{\bm\sigma}&=\bm{sign}(\bm S)\\
@@ -181,11 +181,11 @@ where $\zeta_{min}(\cdot)$ and $\zeta_{max}(\cdot)$ mean the minimum and maximum
 
 \begin{myas}
 \textcolor{red}{
-In the low orbit altitude, the external disturbance $\bm\tau_d$ contains the gravity gradient torque, the aerodynamic interference and the solar radiation pressure torque. Thanks to existing studies, the values of the solar radiation pressure and the aerodynamic torque are about $1\times10^{-5}$ Nm, and meanwhile the gradient torque is in the range of $1\times10^{-5}$ Nm. The space perturbation can be specifically regarded as the periodic function in this paper, and the period equals the orbital period $5000$ s~\cite{Inamori2015192}. Hence, the external disturbance can be described by the following expression
+In low-altitude orbit , the external disturbance $\bm\tau_d$ contains the gravity gradient torque, the aerodynamic interference and the solar radiation pressure torque. Thanks to existing studies, the values of the solar radiation pressure and the aerodynamic torque are about $1\times10^{-5}$ Nm, and meanwhile the gradient torque is in the range of $1\times10^{-5}$ Nm. The space perturbation can be specifically regarded as the periodic function in this paper, and the period equals the orbital period $5000$ s~\cite{Inamori2015192}. Hence, the external disturbance can be described by the following expression
 \begin{align}
 \bm\tau_d=\left(0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000)\right)^T.
 \end{align}
-Therefore, the bounded external disturbance satisfy
+Therefore, the bounded external disturbance satisfies
 \begin{align}
 \Vert\bm\tau_d\Vert\le\varphi_1<\infty,
 \end{align}
@@ -204,7 +204,7 @@ sign(x)&\vert x\vert\ge\pi/2\\
 sin(x)&\vert x\vert<\pi/2
 \end{cases},
 \end{align}
-and it's notable that the function above is saturated and owns an important property: $\vert Sine(x)\vert\le\vert x\vert$, $\forall x$. The geometric illustration is shown in Figure~\ref{fig:2}, from which an interesting property can be found by sliding the curve $y=Sine(x)$ along the axis $x=0$ in the range $[-1,1]$, and once the function $y=Sine(x)+\Delta h$ with $\vert\Delta h\vert<1$ settles, one can chose the function $y = x+arcsin(\Delta h)$ to obtain following relations:
+and it's notable that the function above is saturated and owns an important property: $\vert Sine(x)\vert\le\vert x\vert$, $\forall x$. The geometric illustration is shown in Figure~\ref{fig:2}, from which an interesting property can be found by sliding the curve $y=Sine(x)$ along the axis $x=0$ in the range $[-1,1]$, and once the function $y=Sine(x)+\Delta h$ with $\vert\Delta h\vert<1$ settles, one can choose the function $y = x+arcsin(\Delta h)$ to obtain following relations:
 \begin{align}
 &\vert Sine(x)+\Delta h\vert\le\vert x+arcsin(\Delta h)\vert\label{eq:lem11}\\
 &sign(Sine(x)+\Delta h)=sign(x+arcsin(\Delta h)), \forall x, \vert\Delta h\vert<1\label{eq:lem12}.
@@ -499,7 +499,7 @@ The inputs in S-SMC for dynamic model~(\ref{eq:dynamic model}) are exhibited in 
 \frac{1}{\varpi}&\le\frac{\hat \Omega}{\Omega}\le \varpi\\
 \bm\tau_d&=\left(0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000),0.05\sin(2\pi t/5000)\right)^T,
 \end{split}\end{align}
-where $\hat\bullet$ stands for the measurement of the term $\bullet$ with uncertainties. $\varpi$ is the uncertainty boundary parameter, and here we select $\varpi=2$. $\bm\tau_d$ is the external disturbance meaning  space perturbations, such as gravity gradient torque, aerodynamic interference and solar radiation pressure torque.  In this simulation, the measured terms can be specified as: $\hat{\bar m}=1.1\bar m$ may mean some space debris affixed to the subsatellite; $\bar L=1.02L$ and $\bar \Omega=0.98\Omega$ mean some measurement errors happening to the total length and the orbital angular velocity. In Fig~\ref{fig:6}, although the dynamics have been already stable, the tension is switching in the high frequency. It is commonplace in the sliding mode control law design, called chattering, since the signum function is used in the input, which may cause unmodelled high frequency dynamics, and for reducing the chattering, we introduce the boundary layer technique into the proposed control laws through replacing $sign(x)$ by $sat(x/\nu)$, where
+where $\hat\bullet$ stands for the measurement of the term $\bullet$ with uncertainties. $\varpi$ is the uncertainty boundary parameter, and here we select $\varpi=2$. $\bm\tau_d$ is the external disturbance meaning  space perturbations, such as gravity gradient torque, aerodynamic interference and solar radiation pressure torque.  In this simulation, the measured terms can be specified as: $\hat{\bar m}=1.1\bar m$ may mean some space debris affixed to the subsatellite; $\bar L=1.02L$ and $\bar \Omega=0.98\Omega$ mean some measurement errors happening to the total length and the orbital angular velocity. In Fig~\ref{fig:6}, although the dynamics have already been  stable, the tension is switching in the high frequency. It is commonplace in the sliding mode control law design, called chattering, since the signum function is used in the input, which may cause unmodelled high frequency dynamics, and for reducing the chattering, we introduce the boundary layer technique into the proposed control laws through replacing $sign(x)$ by $sat(x/\nu)$, where
 \begin{align}
 sat(x/\nu)=
 \begin{cases}
