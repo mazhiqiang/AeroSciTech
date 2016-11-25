@@ -397,7 +397,7 @@ if and only if $\Delta \bm q = 0$, namely, $\Delta \dot {\bm q} = 0$, one has $\
 \begin{myrem}
 For the adaptive sliding mode control law with input limitation, the adaptive update rate $\frac{\rm{d}}{\rm{d}\it{t}}F(t)$ always helps to remove the side-effect of the input limitation during the stability analysis by using Lyapunov second method, and moreover, the actual examples of $F(t)$ are unhelpful to the theoretical derivation and the control law design~\cite{Hu2008552,6060930}. This is because we can search the actual value of $F(t)$  by the way of state updating from the initial condition $F(0)=0$, for instance, in our simulations, we apply Ode45 technique to update states of the overall system including this adaptive update rate.
 \end{myrem}
-\textcolor{red}{In the aforementioned controller design, signum functions in inputs lead to chattering phenomena, which may cause adverse unmodeled dynamics to ruin the control system. Herein, we adopt the boundary layer technique to reduce chattering through replacing $\rm{sign}\it{(x)}$ by $\rm{sat}\it{(x/\nu)}$, where
+\textcolor{red}{In the aforementioned controller design, signum functions in inputs lead to chattering phenomena, which may cause adverse unmodeled dynamics to ruin the control system. Herein, we adopt the boundary layer technique, which has been widely used in engineering applications~\cite{Hwang1996sliding,In2000Robust,Chen2005}, to reduce chattering through replacing $\rm{sign}\it{(x)}$ by $\rm{sat}\it{(x/\nu)}$, where
 \begin{align}
 \rm{sat}\it{(x/\nu)}=
 \begin{cases}
@@ -405,16 +405,16 @@ x,&\vert x\vert <\nu\\
 \rm{sign}\it{(x)},&\vert x\vert\ge\nu
 \end{cases}
 \end{align}
-and $\nu$ is the boundary layer thickness. However, the cost of using boundary layer in sliding mode controller is that the asymptotic stability of proposed method can not be guaranteed, and we proceed to analyze the convergence precision in the following theorem.
+and $\nu$ is the boundary layer thickness. However, the cost of using boundary layer in sliding mode controller is that the asymptotic stability of proposed method can not be guaranteed. Hence we proceed to analyze the bounded stability in the following theorem.
 \begin{mythm}\label{thm:boundary}
 Considering the controller in Theorem~\ref{thm:1}, we replace $\mathbf{sign}{(\bm{x})}$ in Eq.~(\ref{eq:slider control}) by $\mathbf{sat}{(\boldsymbol {x/\nu})}$, where $\mathbf{sat}{(\boldsymbol{x}/\boldsymbol{\nu})}=\left(\rm{sat}\it{(x_1/\nu_1)},\rm{sat}\it{(x_2/\nu_2)},\cdots,\rm{sat}\it{(x_n/\nu_n)}\right)^T$, to remove the chattering caused by the signum function, and the modified controller can guarantee that the system state error $\Delta\bm q$ is bounded on the boundary of the set $D_1^c$, which is the complement of $D_1$ defined as
 \begin{align}
   D_1\triangleq\left\{\left(\Delta\bm q,\bar z,\gamma,\eta,\alpha\right)\Big\vert\Vert\Delta\bm q\Vert-\frac{\bar z}{\alpha\gamma\eta^2}\le 0\right\}.
 \end{align}
-$\bm z$ is the position vector that describes the distances of system states in the boundary layer from the sliding mode surface, and $\dot{\bm z}$ is the velocity vector correspondingly. It is obvious that $\bm z$ is bounded and has $\Vert\bm z\Vert\le\Vert\bm\nu\Vert$, where $\bm\nu=(\nu_1,\nu_2,\nu_3)^T,\nu_1=\nu_2=\nu_3\ll 1$ is a constant vector denoting the boundary layer thicknesses for the three channels. Since all the inputs are bounded, it is evident to assume that $\dot{\bm z}$ is bounded with $\Vert\dot{\bm z}\Vert\le \bar z\le 2\Vert\bm\nu\Vert/\rm{d}\it{t}$. $\eta$ is defined as a time dependent positive ratio $\eta$ that depicts the relation $\Vert\bm S_{q1}\Vert=\eta\Vert\bm S_{q2}\Vert$, for all $\Vert\bm S_{q1}\Vert\neq 0$, $0<\eta<1$, when $\Vert\bm S_{q1}\Vert= 0$, $\eta$ especially values as $\eta = 1$.
+$\bm z$ is the position vector that describes the distances of system states in the boundary layer from $\bm S_{r2}=0$, and $\dot{\bm z}$ is the velocity vector correspondingly. It is obvious that $\bm z$ is bounded and has $\Vert\bm z\Vert\le\Vert\bm\nu\Vert$, where $\bm\nu=(\nu_1,\nu_2,\nu_3)^T,\nu_1=\nu_2=\nu_3\ll 1$ is a constant vector denoting the boundary layer thicknesses for the three channels. Since all the inputs are bounded, it is reasonable to assume that $\dot{\bm z}$ is bounded with $\Vert\dot{\bm z}\Vert\le \bar z$. $\eta$ is defined as a state dependent positive parameter that depicts the relation $\Vert\bm S_{q1}\Vert=\eta\Vert\bm S_{q2}\Vert$, for all $\Vert\bm S_{q1}\Vert\neq 0$, $0<\eta<1$, when $\Vert\bm S_{q1}\Vert= 0$, $\eta$ especially values as $\eta = 1$.
 \end{mythm}
 \begin{proof}
-Referring to the derivation in Theorem~\ref{thm:1}, we can guarantee the system states reach and enter the boundary layer $\Vert\bm{ S}_{r2}\Vert \le \Vert\bm\nu\Vert$ such that
+Referring to the derivation (\ref{eq:sq2})-(\ref{eq:V1_2}) in Theorem~\ref{thm:1}, we can guarantee that the system states reach and enter the boundary layer $\Vert\bm{ S}_{r2}\Vert \le \Vert\bm\nu\Vert$ such that
 \begin{align}
 \bm S_{q2}=\bm z-\mathbf{arcsin}(\gamma\int^t_{t_0}\bm S_{q1}(\varsigma) \rm{d}\it{\varsigma}).
 \end{align}
@@ -436,7 +436,7 @@ Based on LaSalle theorem~\cite{lasalle1960some}, the above expression implies th
 \begin{align}
   D_2\triangleq\left\{(\bm S_{q2},\bar z,\gamma,\eta)\Big\vert \frac{\bar z}{\gamma\eta^2}-\Vert \bm S_{q2}\Vert\ge 0\right\}
 \end{align}
-Rephrasing that, the controller in Theorem~\ref{thm:1} with boundary layer technique can drive $\bm S_{q2}$ to the boundary of $D_2^c$. Considering the situation that the system state error maintains on the boundary of $D_2^c$, we can accordingly analyze the ultimate precision of system state error $\Delta\bm q$ by
+Rephrasing that, the controller in Theorem~\ref{thm:1} with boundary layer technique can drive $\bm S_{q2}$ to the boundary of $D_2^c$. Considering the situation that the system state error reaches the boundary of $D_2^c$, we can accordingly analyze the ultimate precision of system state error $\Delta\bm q$ by
 \begin{align}
 &\Delta \dot {\bm q}+\alpha\Delta\bm q=\hat{\bm z}\\
 &\Vert\hat{\bm z}\Vert=\frac{\bar z}{\gamma\eta^2}.
@@ -450,10 +450,10 @@ Choosing the Lyapunov function $V_4=\frac{1}{2}\Delta\bm q^T\Delta\bm q$, its ti
 \end{split}\end{align}
 Hence, by LaSalle theorem~\cite{lasalle1960some}, it follows that $\Delta\bm q$ is bounded on the boundary of the set $D_1^c$, which is the complement of $D_1$. This completes the proof.
 \end{proof}
-}
 \begin{myrem}
-Particularly, in this work, the boundary layer is always attractive and is designed to be very thin. Moreover, by utilizing the proposed controller, the bounded inputs ensure that the dynamics in boundary layer are windless, which means that the change of $\bm z$ is not drastic and makes $\dot{\bm z}$ keep in a low level. We thus reasonably assume that $\bar z$ is a tiny positive scalar to ensure that $D_1$ is a small vicinity of origin. The proposed controller works to decrease the system state errors $\Delta\bm q$ and $\Delta\dot{\bm q}$, and this decreasing process tends to increasing $\eta$ contrarily. Hence, we can conclude that the system state error can maintain in a low level after reaching the boundary layer.
+Particularly, in this work, the boundary layer is always attractive and is designed to be very thin. Moreover, by utilizing the proposed controller, the bounded inputs ensure that the dynamics in boundary layer are windless, which means that the change of $\bm z$ is not drastic and makes $\dot{\bm z}$ keep in a low level. We thus reasonably assume that $\bar z$ is a tiny positive scalar to ensure that $D_1$ is a small vicinity of origin. The proposed controller works to decrease the system state errors $\Delta\bm q$ and $\Delta\dot{\bm q}$, and this decreasing process tends to increase $\eta$ contrarily. Hence, we can conclude that the system state error can keep in a low level after reaching the boundary layer.
 \end{myrem}
+}
 \subsection{Quasi-saturated terminal sliding mode control law subjected to input limitation}
 The design methodology of the saturated sliding mode control law has been exhibited in last subsection, and the entire strict proof ensures that the deployment dynamics of the TSS can be regulated with the limited tension control. If the order of the integrated error becomes a fraction, the value of which is less than one, we obtain the terminal attractor like
 \begin{align}
