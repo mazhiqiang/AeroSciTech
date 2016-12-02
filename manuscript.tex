@@ -82,7 +82,7 @@ Based on the assumption mentioned above and Lagrangian mechanics theory, we can 
 \begin{split}
 &\bar m l''-\bar m l\left\{\begin{bmatrix}\phi'^2+(\theta'+\Omega)^2\cos^2\phi\end{bmatrix}+\Omega^2(3\cos^2\phi\cos^2\theta-1)\right\}=-\tau_t+\tau_{td}\\
 &\bar m l^2\cos^2\phi\theta''+2\bar m (\theta'+\Omega)l^2\cos^2\phi(l'/l-\phi'\tan\phi)+3\bar m \Omega^2l^2\sin\theta\cos\theta\cos^2\phi=\tau_\theta+\tau_{\theta d}\\
-&\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\left[(\theta'+\Omega)^2+3\bar m \Omega\cos^2\theta\right]=\tau_\phi+\tau_{\phi d},\label{eq:dynamics 1}
+&\bar m l^2\phi''+2\bar m \phi'l'l+\bar m l^2\sin\phi\cos\phi\left[(\theta'+\Omega)^2+3\bar m \Omega^2\cos^2\theta\right]=\tau_\phi+\tau_{\phi d},\label{eq:dynamics 1}
 \end{split}
 \end{align}
 where, $m = m_1+m_2$ stands for the total mass of the system, $m_1$ and $m_2$ of which denote the mass of the mother satellite and of the subsatellite, respectively. $(\cdot)'$ represents a first derivative with respect to time, and $l$ means the tether length connecting the satellites. $\theta$ and $\phi$ depict the roll and pitch dynamics of the TSS. For clarity, $m_1m_2/m$ is rewritten as $\bar m$. $\tau_t$, $\tau_\theta$ and $\tau_\phi$ are the tension, the in-plane thruster force and the out-of-plane thruster force, respectively. $\tau_{t d}$, $\tau_{\theta d}$ and $\tau_{\phi d}$ stand for the bounded external disturbances correspondingly. Typically, the dimensionless transformations simplify issues for researchers to design the deployment scheme, and the conventional transformations are represented as shown below~\cite{williams2009yes2,wen2015space,wen2016constrained}:
@@ -125,7 +125,7 @@ where
 \bm\tau_d&=\begin{pmatrix}\hat\tau_{td}&\hat\tau_{\theta d}&\hat\tau_{\phi d}\end{pmatrix}^T\\
 H(\bm q) &= \begin{bmatrix}1 &0&0\\0 &\lambda^2\cos^2\phi&0\\0&0&\lambda^2\end{bmatrix}\\
 C(\bm q,\dot{\bm q}) &=\begin{bmatrix}0 &-(\lambda\dot \theta+2\lambda)\cos^2\phi&-\lambda\dot\phi\\(2\lambda+\lambda\dot \theta)\cos^2\phi&\lambda\dot \lambda\cos^2\phi-\lambda^2\dot\phi\sin\phi\cos\phi&-(\dot\theta+2)\lambda^2\sin\phi\cos\phi\\ \lambda\dot\phi&\lambda^2(\dot\theta+2)\sin\phi\cos\phi&\lambda\dot \lambda\end{bmatrix}\\
-G(\bm q) &=\begin{bmatrix}-\lambda\cos^2\phi+2\lambda+3\lambda\cos ^2\theta\cos^2\phi\\3\lambda^2\cos\theta\sin\theta\cos^2\phi\\\lambda^2+3\lambda^2\cos^2\theta\sin\phi\cos\phi\end{bmatrix}.
+G(\bm q) &=\begin{bmatrix}-\lambda\cos^2\phi+2\lambda+3\lambda\cos ^2\theta\cos^2\phi\\3\lambda^2\cos\theta\sin\theta\cos^2\phi\\(1+3\cos^2\theta)\lambda^2\sin\phi\cos\phi\end{bmatrix}.
 \end{split}
 \end{align}
 Based on the expression above, one can find that $\dot H(\bm q) - 2C(\bm q,\dot{\bm q})$ is skew-symmetric, namely,
